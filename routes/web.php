@@ -47,10 +47,3 @@ Route::get('/dates', 'DateController@index');
 Route::get('/ticket/{id}', 'TicketController@show');
 Route::get('/ticket/{id}/excel', 'TicketController@excel');
 Route::get('/ticket/{id}/pdf', 'TicketController@pdf');
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

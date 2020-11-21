@@ -13,11 +13,11 @@
                         <div class="col-sm-5">
                             <div class="float-right">
                                 <a href="{{ url('lotteries') }}" class="btn btn-sm btn-secondary">
-                                    <span class="glyphicon glyphicon-chevron-left"></span>
+                                    <i class="fa fa-rotate-left"></i>
                                     Regresar
                                 </a>
                                 <button type="submit" class="btn btn-sm btn-primary">
-                                    <span class="glyphicon glyphicon-floppy-disk"></span>
+                                    <i class="fa fa-save"></i>
                                     Guardar
                                 </button>
                             </div>

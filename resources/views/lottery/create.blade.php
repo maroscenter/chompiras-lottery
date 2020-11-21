@@ -13,11 +13,11 @@
                         <div class="col-sm-5">
                             <div class="float-right">
                                 <a href="{{ url('lotteries') }}" class="btn btn-sm btn-secondary">
-                                    <span class="glyphicon glyphicon-chevron-left"></span>
+                                    <i class="fa fa-rotate-left"></i>
                                     Regresar
                                 </a>
                                 <button type="submit" class="btn btn-sm btn-primary">
-                                    <span class="glyphicon glyphicon-floppy-disk"></span>
+                                    <i class="fa fa-save"></i>
                                     Registrar
                                 </button>
                             </div>
@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <h5><span class="glyphicon glyphicon-list-alt"></span> Datos básicos</h5>
+                    <h5><i class="fa fa-navicon"></i> Datos básicos</h5>
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
@@ -56,7 +56,7 @@
                         </div>
                     </div>
 
-                    <h5><span class="glyphicon glyphicon-time"></span> Horario de cierre</h5>
+                    <h5><i class="fa fa-clock-o"></i> Horario de cierre</h5>
                     <div class="row">
                         <div class="col-sm-2">
                             <div class="form-group">
@@ -118,7 +118,7 @@
 
                     <div class="row">
                         <div class="offset-md-4 col-sm-4">
-                            <h5><span class="glyphicon glyphicon-calendar"></span> Dias inactivos</h5>
+                            <h5><i class="fa fa-calendar-times-o"></i> Dias inactivos</h5>
                             <div id="alertInactiveDay"></div>
                             <div class="form-inline" style="margin-bottom: 15px">
                                 <div class="form-group">
@@ -136,7 +136,7 @@
                         </div>
                     </div>
 
-                    <h5><span class="glyphicon glyphicon-usd"></span> Premios</h5>
+                    <h5><i class="fa fa-dollar"></i> Premios</h5>
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
