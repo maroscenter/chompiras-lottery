@@ -43,31 +43,31 @@ class TicketController extends Controller
 
             if ($point <= 0) {
                 $data['success'] = false;
-                $data['errors'] = "Los puntos a registrar en la jugada no pueden ser negativos o cero";
+                $data['error_message'] = "Los puntos a registrar en la jugada no pueden ser negativos o cero";
                 return $data;
             }
 
             if(!is_numeric($number)) {
                 $data['success'] = false;
-                $data['errors'] = "Los números a registrar en la jugada tienen que ser numéricos";
+                $data['error_message'] = "Los números a registrar en la jugada tienen que ser numéricos";
                 return $data;
             }
 
             if($type == 'Quiniela' && strlen($number) != 2) {
                 $data['success'] = false;
-                $data['errors'] = "Se acepta un número de 2 digitos para Quiniela";
+                $data['error_message'] = "Se acepta un número de 2 digitos para Quiniela";
                 return $data;
             }
 
             if($type == 'Pale' && strlen($number) != 4) {
                 $data['success'] = false;
-                $data['errors'] = "Se acepta un número de 4 digitos para Pale";
+                $data['error_message'] = "Se acepta un número de 4 digitos para Pale";
                 return $data;
             }
 
             if($type == 'Tripleta' && strlen($number) != 6) {
                 $data['success'] = false;
-                $data['errors'] = "Se acepta un número de 6 digitos para Tripleta";
+                $data['error_message'] = "Se acepta un número de 6 digitos para Tripleta";
                 return $data;
             }
 
@@ -78,14 +78,14 @@ class TicketController extends Controller
 
             if(!$lottery) {
                 $data['success'] = false;
-                $data['errors'] = "No existe ninguna lotería con id $lotteryId.";
+                $data['error_message'] = "No existe ninguna lotería con id $lotteryId.";
                 return $data;
             }
 
             $existsInactive = $lottery->inactive_dates()->where('date', $now)->exists();
             if($existsInactive) {
                 $data['success'] = false;
-                $data['errors'] = "La lotería $lottery->name ya no admite más jugadas en esta fecha. Vuelva a intentarlo el día de mañana.";
+                $data['error_message'] = "La lotería $lottery->name ya no admite más jugadas en esta fecha. Vuelva a intentarlo el día de mañana.";
                 return $data;
             }
 
@@ -96,7 +96,7 @@ class TicketController extends Controller
             // from hClose until the end of the day registration is closed
             if ($now >= $hClose && $now < $tomorrow) {
                 $data['success'] = false;
-                $data['errors'] = "No se admiten más jugadas en este horario. Vuelva a intentarlo el día de mañana. ($lottery->name)";
+                $data['error_message'] = "No se admiten más jugadas en este horario. Vuelva a intentarlo el día de mañana. ($lottery->name)";
                 return $data;
             }
 
@@ -107,25 +107,25 @@ class TicketController extends Controller
 
                     if($type == 'Quiniela' && $limit->quiniela <= $sumType) {
                         $data['success'] = false;
-                        $data['errors'] = "Lo sentimos, pero su límite de ventas para Quiniela es de $limit->quiniela puntos";
+                        $data['error_message'] = "Lo sentimos, pero su límite de ventas para Quiniela es de $limit->quiniela puntos";
                         return $data;
                     }
 
                     if($type == 'Pale' && $limit->pale <= $sumType) {
                         $data['success'] = false;
-                        $data['errors'] = "Lo sentimos, pero su límite de ventas para Pale es de $limit->pale puntos";
+                        $data['error_message'] = "Lo sentimos, pero su límite de ventas para Pale es de $limit->pale puntos";
                         return $data;
                     }
 
 //                    if($type == 'Super Pale' && $limit->super_pale <= $sumType) {
 //                        $data['success'] = false;
-//                        $data['errors'] = "Lo sentimos, pero su límite de ventas para Super Pale es de $limit->super_pale puntos";
+//                        $data['error_message'] = "Lo sentimos, pero su límite de ventas para Super Pale es de $limit->super_pale puntos";
 //                        return $data;
 //                    }
 
                     if($type == 'Tripleta' && $limit->tripleta <= $sumType) {
                         $data['success'] = false;
-                        $data['errors'] = "Lo sentimos, pero su límite de ventas para Tripleta es de $limit->tripleta puntos";
+                        $data['error_message'] = "Lo sentimos, pero su límite de ventas para Tripleta es de $limit->tripleta puntos";
                         return $data;
                     }
                 }
@@ -184,7 +184,6 @@ class TicketController extends Controller
         }
 
         $data['success'] = true;
-        $data['errors'] = '';
         return $data;
     }
 
@@ -195,7 +194,6 @@ class TicketController extends Controller
         $ticket->delete();
 
         $data['success'] = true;
-        $data['errors'] = '';
         return $data;
     }
 }
