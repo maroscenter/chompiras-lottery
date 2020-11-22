@@ -176,7 +176,7 @@ class TicketController extends Controller
 
                 $play = new TicketPlay();
                 $play->number = $number;
-                $play->point = $point;
+                $play->points = $point;
                 $play->type = $type;
                 $play->ticket_id = $ticket->id;
                 $play->save();

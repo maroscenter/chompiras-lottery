@@ -17,7 +17,7 @@ class CreateTicketPlaysTable extends Migration
             $table->increments('id');
 
             $table->string('number');
-            $table->integer('point')->unsigned();
+            $table->unsignedInteger('points');
             $table->string('type');
 
             $table->unsignedInteger('ticket_id');
