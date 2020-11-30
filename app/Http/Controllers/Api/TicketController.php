@@ -23,8 +23,6 @@ class TicketController extends Controller
         $user = $request->user();
         $lotteryIds = $request->input('lotteries');
         $plays = $request->input('plays');
-        $numbers = $request->input('numbers');
-        $points = $request->input('points');
         $types = $request->input('types');
 
         // New registrations are available by intervals, each day
@@ -35,6 +33,18 @@ class TicketController extends Controller
         $tomorrow = Carbon::tomorrow();
 
         $limit = SalesLimit::where('user_id', $user->id)->first();
+
+        if (!$request->has('lotteries')) {
+            $data['success'] = false;
+            $data['error_message'] = "Es necesario seleccionar al menos una lotería";
+            return $data;
+        }
+
+        if (!$request->has('plays')) {
+            $data['success'] = false;
+            $data['error_message'] = "Es necesario ingresar una jugada";
+            return $data;
+        }
 
         foreach ($plays as $play) {
             $type = $play['type'];

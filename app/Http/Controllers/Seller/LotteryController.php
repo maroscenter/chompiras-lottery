@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Seller;
+
+use App\Http\Controllers\Controller;
 
 use App\ClosingTime;
 use App\InactiveDate;
@@ -16,12 +18,12 @@ class LotteryController extends Controller
 
         $lotteries = $user->lotteries;
 
-        return view('lottery.index', compact('lotteries'));
+        return view('seller.lottery.index', compact('lotteries'));
     }
 
     public function create()
     {
-        return view('lottery.create');
+        return view('seller.lottery.create');
     }
 
     public function store(Request $request)
@@ -85,7 +87,7 @@ class LotteryController extends Controller
     {
         $lottery = Lottery::findOrFail($id);
 
-        return view('lottery.edit', compact('lottery'));
+        return view('seller.lottery.edit', compact('lottery'));
     }
 
     public function update(Request $request, $id)

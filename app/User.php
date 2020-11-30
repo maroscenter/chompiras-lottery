@@ -45,6 +45,11 @@ class User extends Authenticatable
         return $this->hasMany(Lottery::class);
     }
 
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
+
     public function active_lotteries()
     {
         return $this->lotteries()->where('status', '=', true);

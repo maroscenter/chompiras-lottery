@@ -23,17 +23,24 @@ Auth::routes(['register' => false]);
 // Dashboard
 Route::get('/home', 'HomeController@index');
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => 'auth', 'namespace' => 'Seller'], function () {
     //lotteries
     Route::group(['prefix' => 'lotteries'], function () {
-
         Route::get('', 'LotteryController@index');
         Route::get('create', 'LotteryController@create');
         Route::post('create', 'LotteryController@store');
         Route::get('{id}/edit', 'LotteryController@edit');
         Route::post('{id}/edit', 'LotteryController@update');
     });
-//sales limit
+    //tickets
+    Route::group(['prefix' => 'tickets'], function () {
+        Route::get('create', 'TicketController@create');
+        Route::post('create', 'TicketController@store');
+        Route::get('{id}/delete', 'TicketController@delete');
+    });
+});
+Route::group(['middleware' => 'auth'], function () {
+    //sales limit
     Route::get('sales-limit', 'SalesLimitController@index');
     Route::post('sales-limit', 'SalesLimitController@update');
 });

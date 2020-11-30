@@ -39,6 +39,9 @@
                         <li class="nav-item {{ request()->is('lotteries*') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ url('lotteries') }}">Loterías</a>
                         </li>
+                            <li class="nav-item {{ request()->is('tickets*') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ url('tickets/create') }}">Tickets</a>
+                            </li>
                         <li class="nav-item {{ request()->is('sales-limit*') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ url('sales-limit') }}">Límite de ventas</a>
                         </li>
