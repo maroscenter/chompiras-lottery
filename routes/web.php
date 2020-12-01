@@ -43,6 +43,12 @@ Route::group(['middleware' => 'auth'], function () {
     //sales limit
     Route::get('sales-limit', 'SalesLimitController@index');
     Route::post('sales-limit', 'SalesLimitController@update');
+    //raffles
+    Route::group(['prefix' => 'raffles', 'namespace' => 'Admin'], function () {
+        Route::get('', 'RaffleController@index');
+        Route::get('create', 'RaffleController@create');
+        Route::post('create', 'RaffleController@store');
+    });
 });
 
 // Dashboard links

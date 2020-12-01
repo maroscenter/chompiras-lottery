@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class TicketPlay extends Model
 {
-    public function lottery()
+    public function ticket()
     {
-        return $this->belongsTo(Lottery::class);
+        return $this->belongsTo(Ticket::class);
     }
 }

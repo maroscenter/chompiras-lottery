@@ -59,4 +59,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(SalesLimit::class);
     }
+
+    public function is_role($role)
+    {
+        return $this->role == $role;
+    }
 }
