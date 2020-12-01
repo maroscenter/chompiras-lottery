@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Earning;
 use App\Lottery;
 use App\SalesLimit;
 use App\Ticket;
@@ -193,13 +194,46 @@ class TicketController extends Controller
             }
         }
 
+        $points = $ticket->plays()->select('points')->sum('points');
+        $countLotteries = $ticket->lotteries()->count();
+
+        $ticket->total_points = $points*$countLotteries;
+        $ticket->commission_earned = $points*$countLotteries*0.15;
+        $ticket->save();
+
+        //earnings
+        $earning = $user->earning;
+
+        if(!$earning) {
+            $earning = new Earning();
+            $earning->user_id = $user->id;
+        }
+        $earning->quantity_tickets =+ 1;
+        $earning->quantity_points =+ $ticket->total_points;
+        $earning->income =+ $ticket->total_points;
+        $earning->commission_earned =+ $ticket->commission_earned;
+        $earning->save();
+
         $data['success'] = true;
         return $data;
     }
 
-    public function delete($id)
+    public function delete($id, Request $request)
     {
         $ticket = Ticket::find($id);
+        $user = $request->user();
+        //earnings
+        $earning = $user->earning;
+
+        if(!$earning) {
+            $earning = new Earning();
+            $earning->user_id = $user->id;
+        }
+        $earning->quantity_tickets =- 1;
+        $earning->quantity_points =- $ticket->total_points;
+        $earning->income =- $ticket->total_points;
+        $earning->commission_earned =- $ticket->commission_earned;
+        $earning->save();
 
         $ticket->delete();
 

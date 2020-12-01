@@ -33,7 +33,7 @@ class Ticket extends Model
 
     public function getSumPointsAttribute()
     {
-        return number_format($this->plays()->select('point')->sum('point'), 2, ',', ' ');
+        return number_format($this->total_points, 2, ',', ' ');
     }
 
 }
