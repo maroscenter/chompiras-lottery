@@ -30,16 +30,16 @@ class RaffleController extends Controller
     public function store(Request $request)
     {
         //parameters
-        $number1 = $request->number_1;
-        $number2 = $request->number_2;
-        $number3 = $request->number_3;
+        $n1 = $request->number_1;
+        $n2 = $request->number_2;
+        $n3 = $request->number_3;
         $lotteryId = $request->lottery_id;
         $datetime = $request->datetime;
         //register raffle
         $raffle = new Raffle();
-        $raffle->number_1 = $number1;
-        $raffle->number_2 = $number2;
-        $raffle->number_3 = $number3;
+        $raffle->number_1 = $n1;
+        $raffle->number_2 = $n2;
+        $raffle->number_3 = $n3;
         $raffle->lottery_id = $lotteryId;
         $raffle->datetime = $datetime;
         $raffle->save();
@@ -58,20 +58,71 @@ class RaffleController extends Controller
         if($ticketIds) {
             //winners Quiniela
             $prize = $lottery->prizes()->where('name', 'Quiniela')->first();
-            $this->registerWinners($ticketIds, 'Quiniela', $number1, $prize->first, $lotteryId, $raffle->id);
-            $this->registerWinners($ticketIds, 'Quiniela', $number2, $prize->second, $lotteryId, $raffle->id);
-            $this->registerWinners($ticketIds, 'Quiniela', $number3, $prize->third, $lotteryId, $raffle->id);
+            $this->registerWinners($ticketIds, 'Quiniela', $n1, $prize->first, $lotteryId, $raffle->id);
+            $this->registerWinners($ticketIds, 'Quiniela', $n2, $prize->second, $lotteryId, $raffle->id);
+            $this->registerWinners($ticketIds, 'Quiniela', $n3, $prize->third, $lotteryId, $raffle->id);
+            //winners Palé
+            $prize = $lottery->prizes()->where('name', 'Palé')->first();
+            $firstNumbers = [$n1.$n2,$n1.$n3,$n2.$n1,$n3.$n1];
+            $secondNumbers = [$n2.$n3,$n3.$n2];
+            $this->registerWinners($ticketIds, 'Pale', $firstNumbers, $prize->first, $lotteryId, $raffle->id);
+            $this->registerWinners($ticketIds, 'Pale', $secondNumbers, $prize->second, $lotteryId, $raffle->id);
+            //winners Tripleta
+            $prize = $lottery->prizes()->where('name', 'Tripleta')->first();
+            $numbers = [$n1,$n2,$n3];
+            $this->registerTripletaWinners($ticketIds, $numbers, $prize->first, $prize->second, $lotteryId, $raffle->id);
         }
 
         return redirect('raffles');
     }
 
+    function registerTripletaWinners($ticketIds, $numbers, $prizeFirst, $prizeSecond, $lotteryId, $raffleId)
+    {
+        $ticketPlays = TicketPlay::whereIn('ticket_id', $ticketIds)
+            ->where('type', 'Tripleta')->get();
+
+        if ($ticketPlays) {
+            foreach ($ticketPlays as $ticketPlay) {
+                $count = 0;
+                $ticketNumbers = str_split($ticketPlay->number, 2);
+
+                if (in_array($ticketNumbers[0], $numbers))
+                    $count += 1;
+
+                if (in_array($ticketNumbers[1], $numbers))
+                    $count += 1;
+
+                if (in_array($ticketNumbers[2], $numbers))
+                    $count += 1;
+
+                if ($count > 1) {
+                    $winner = new Winner();
+                    if($count == 3)
+                        $winner->reward = $prizeFirst*$ticketPlay->points;
+                    else
+                        $winner->reward = $prizeSecond*$ticketPlay->points;
+
+                    $winner->ticket_play_id = $ticketPlay->id;
+                    $winner->lottery_id = $lotteryId;
+                    $winner->user_id = $ticketPlay->ticket->user_id;
+                    $winner->raffle_id = $raffleId;
+                    $winner->save();
+                }
+            }
+        }
+    }
+
     function registerWinners($ticketIds, $type, $number, $prize, $lotteryId, $raffleId)
     {
-        $winnerPlays = TicketPlay::whereIn('ticket_id', $ticketIds)
-            ->where('type', $type)
-            ->where('number', $number)
-            ->get();
+        $query = TicketPlay::whereIn('ticket_id', $ticketIds)
+            ->where('type', $type);
+
+        if ($type == 'Quiniela')
+            $query = $query->where('number', $number);
+        else
+            $query = $query->whereIn('number', $number);
+
+        $winnerPlays = $query->get();
 
         if ($winnerPlays) {
             foreach ($winnerPlays as $winnerPlay) {
