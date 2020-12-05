@@ -102,12 +102,14 @@ class TicketController extends Controller
 
             $lotteryTime = $lottery->closing_times()->where('day', $nameDay)->first();
 
-            $hClose = Carbon::parse($lotteryTime->time);
+            $hCloseStart = Carbon::parse($lotteryTime->time)->subMinutes(15);
+            $hCloseEnd = Carbon::parse($lotteryTime->time)->addMinutes(15);
 
             // from hClose until the end of the day registration is closed
-            if ($now >= $hClose && $now < $tomorrow) {
+            if ($hCloseStart < $now && $now < $hCloseEnd) {
+                $diffInMinutes = $hCloseEnd->diffInMinutes($now);
                 $data['success'] = false;
-                $data['error_message'] = "No se admiten más jugadas en este horario. Vuelva a intentarlo el día de mañana. ($lottery->name)";
+                $data['error_message'] = "No se admiten más jugadas en este horario. Vuelva a intentarlo despues de $diffInMinutes minutos. ($lottery->name)";
                 return $data;
             }
 
