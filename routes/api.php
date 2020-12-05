@@ -47,5 +47,8 @@ Route::group([
     Route::post('/tickets', 'Api\TicketController@store');
     //delete tickets
     Route::post('/tickets/{id}/delete', 'Api\TicketController@delete');
+    //earnings
+    Route::get('earnings', 'Api\UserController@earning');
+    Route::get('winners', 'Api\UserController@winners');
 });
 

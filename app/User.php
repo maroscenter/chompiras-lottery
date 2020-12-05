@@ -65,6 +65,11 @@ class User extends Authenticatable
         return $this->hasOne(Earning::class);
     }
 
+    public function winners()
+    {
+        return $this->hasMany(Winner::class);
+    }
+
     public function is_role($role)
     {
         return $this->role == $role;

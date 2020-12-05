@@ -10,4 +10,9 @@ class Raffle extends Model
     {
         return $this->belongsTo(Lottery::class);
     }
+
+    public function winners()
+    {
+        return $this->hasMany(Winner::class);
+    }
 }

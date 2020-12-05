@@ -12,8 +12,6 @@
                     </a>
                 </div>
 
-                <p>Listado de sorteos.</p>
-
                 <table class="table table-bordered">
                     <thead>
                     <tr>
