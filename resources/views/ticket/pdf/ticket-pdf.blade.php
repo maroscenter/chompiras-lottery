@@ -5,9 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <style type="text/css">
-        @page { margin: 3em; }
+        @page {
+            size: 8.5cm 11cm;
+            margin: 0 !important;
+        }
         body {
             margin: 0;
+            font-family: "Nunito", sans-serif !important;
+            font-size: 85%;
         }
         table {
             border-collapse: collapse;
@@ -38,8 +43,8 @@
     </style>
 </head>
 <body>
-<div style="width: 50%; margin: 0 auto; border: 1px solid; padding: 10px">
-    <h4>{{ $ticket->user->name }}</h4>
+<div style="width: 100%; margin: 0 auto; padding: 10px">
+    <h3>{{ $ticket->user->name }}</h3>
     <p>
         <b>Lotería{{ $ticket->lotteries->count() > 1 ? 's' : '' }}:</b>
         @foreach($ticket->lotteries as $lottery)
@@ -85,9 +90,9 @@
         <tbody>
         @foreach ($ticket->plays as $play)
             <tr>
-                <td>{{ $play->points }}</td>
-                <td>{{ $play->number }}</td>
                 <td>{{ $play->type }}</td>
+                <td>{{ $play->number }}</td>
+                <td>{{ $play->points }}</td>
             </tr>
         @endforeach
         </tbody>

@@ -55,9 +55,9 @@
                             <tbody>
                             @foreach ($ticket->plays as $play)
                                 <tr>
-                                    <td>{{ $play->points }}</td>
-                                    <td>{{ $play->number }}</td>
                                     <td>{{ $play->type }}</td>
+                                    <td>{{ $play->number }}</td>
+                                    <td>{{ $play->points }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
