@@ -66,7 +66,7 @@
                             <input type="hidden" class="select2 form-control" id="sellerId">
                         </div>
                     </div>
-                    <div id="table-responsive">
+                    <div class="table-responsive">
                         <table class="table">
                             <thead>
                             <tr>
