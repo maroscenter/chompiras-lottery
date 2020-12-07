@@ -20,12 +20,11 @@ class TicketController extends Controller
     }
     public function store(Request $request)
     {
+
         // Get params
         $user = $request->user();
         $lotteryIds = $request->input('lotteries');
         $plays = $request->input('plays');
-        $types = $request->input('types');
-
         // New registrations are available by intervals, each day
         // <start, xx:xx> OPEN
         // [xx:xx, 00:00> CLOSE
@@ -50,7 +49,7 @@ class TicketController extends Controller
         foreach ($plays as $play) {
             $type = $play['type'];
             $number = $play['number'];
-            $point = $play['point'];
+            $point = $play['points'];
 
             if ($point <= 0) {
                 $data['success'] = false;
@@ -114,9 +113,13 @@ class TicketController extends Controller
             }
 
             if($limit) {
-                foreach ($types as $type) {
-                    $sumType = TicketPlay::where('lottery_id', $lotteryId)
-                        ->where('type', $type)->select('point')->sum('point');
+                foreach ($plays as $play) {
+                    $type = $play['type'];
+
+                    $ticketIds = TicketLottery::where('lottery_id', $lotteryId)->pluck('ticket_id');
+
+                    $sumType = TicketPlay::whereIn('ticket_id', $ticketIds)
+                        ->where('type', $type)->select('points')->sum('points');
 
                     if($type == 'Quiniela' && $limit->quiniela <= $sumType) {
                         $data['success'] = false;
@@ -185,7 +188,7 @@ class TicketController extends Controller
             foreach ($plays as $play) {
                 $type = $play['type'];
                 $number = $play['number'];
-                $point = $play['point'];
+                $point = $play['points'];
 
                 $play = new TicketPlay();
                 $play->number = $number;
