@@ -35,9 +35,12 @@ class SalesLimitController extends Controller
 
         $sellerIds = $request->seller_ids;
 
-        SalesLimit::whereNotNull('user_id')->whereNotIn('user_id', $sellerIds)->delete();
+        if (!$request->has('sellet_ids'))
+            SalesLimit::whereNotNull('user_id')->delete();
 
         if($sellerIds) {
+            SalesLimit::whereNotNull('user_id')->whereNotIn('user_id', $sellerIds)->delete();
+
             foreach ($sellerIds as $key => $sellerId) {
                 $seller = User::findOrFail($sellerId);
 

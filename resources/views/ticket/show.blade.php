@@ -47,9 +47,9 @@
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>Ptos</th>
-                                <th>Num</th>
                                 <th>Tipo</th>
+                                <th>Num</th>
+                                <th>Ptos</th>
                             </tr>
                             </thead>
                             <tbody>
