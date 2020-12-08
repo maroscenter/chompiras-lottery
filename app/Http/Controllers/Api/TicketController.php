@@ -90,56 +90,56 @@ class TicketController extends Controller
             $type = $play['type'];
             $point = $play['points'];
 
-            //global
-            $ticketGlobalIds = Ticket::whereBetween('created_at', [$startOfWeek, $endOfWeek])->pluck('id');
-            $sumGlobalType = TicketPlay::whereIn('ticket_id', $ticketGlobalIds)
-                ->where('type', $type)->select('points')->sum('points');
-
-            if($type == 'Quiniela' && $global->quiniela <= ($sumGlobalType + $point*$countLotteryIds)) {
-                $data['success'] = false;
-                $available = $global->quiniela - $sumGlobalType;
-                $data['error_message'] = "Lo sentimos, pero excedió el límite global de ventas semanales para Quiniela. ($available puntos disponibles)";
-                return $data;
-            }
-
-            if($type == 'Pale' && $global->pale <= ($sumGlobalType + $point*$countLotteryIds)) {
-                $data['success'] = false;
-                $available = $global->pale - $sumGlobalType;
-                $data['error_message'] = "Lo sentimos, pero excedió el límite global de ventas semanales para Pale. ($available puntos disponibles)";
-                return $data;
-            }
-
-            if($type == 'Tripleta' && $global->tripleta <= ($sumGlobalType + $point*$countLotteryIds)) {
-                $data['success'] = false;
-                $available = $global->tripleta - $sumGlobalType;
-                $data['error_message'] = "Lo sentimos, pero excedió el límite global de ventas semanales para Tripleta. ($available puntos disponibles)";
-                return $data;
-            }
-
             //limit - individual
             $ticketIds = $user->tickets()->whereBetween('created_at', [$startOfWeek, $endOfWeek])->pluck('id');
 
             $sumType = TicketPlay::whereIn('ticket_id', $ticketIds)
                 ->where('type', $type)->select('points')->sum('points');
 
-            if($type == 'Quiniela' && $limit->quiniela <= ($sumType + $point*$countLotteryIds)) {
+            if($type == 'Quiniela' && $limit->quiniela < ($sumType + $point*$countLotteryIds)) {
                 $data['success'] = false;
                 $available = $limit->quiniela - $sumType;
                 $data['error_message'] = "Lo sentimos, pero excedió su límite de ventas semanales para Quiniela. ($available puntos disponibles)";
                 return $data;
             }
 
-            if($type == 'Pale' && $limit->pale <= ($sumType + $point*$countLotteryIds)) {
+            if($type == 'Pale' && $limit->pale < ($sumType + $point*$countLotteryIds)) {
                 $data['success'] = false;
                 $available = $limit->pale - $sumType;
                 $data['error_message'] = "Lo sentimos, pero excedió su límite de ventas semanales para Pale. ($available puntos disponibles)";
                 return $data;
             }
 
-            if($type == 'Tripleta' && $limit->tripleta <= ($sumType + $point*$countLotteryIds)) {
+            if($type == 'Tripleta' && $limit->tripleta < ($sumType + $point*$countLotteryIds)) {
                 $data['success'] = false;
                 $available = $limit->tripleta - $sumType;
                 $data['error_message'] = "Lo sentimos, pero excedió su límite de ventas semanales para Tripleta. ($available puntos disponibles)";
+                return $data;
+            }
+
+            //global
+            $ticketGlobalIds = Ticket::whereBetween('created_at', [$startOfWeek, $endOfWeek])->pluck('id');
+            $sumGlobalType = TicketPlay::whereIn('ticket_id', $ticketGlobalIds)
+                ->where('type', $type)->select('points')->sum('points');
+
+            if($type == 'Quiniela' && $global->quiniela < ($sumGlobalType + $point*$countLotteryIds)) {
+                $data['success'] = false;
+                $available = $global->quiniela - $sumGlobalType;
+                $data['error_message'] = "Lo sentimos, pero excedió el límite global de ventas semanales para Quiniela. ($available puntos disponibles)";
+                return $data;
+            }
+
+            if($type == 'Pale' && $global->pale < ($sumGlobalType + $point*$countLotteryIds)) {
+                $data['success'] = false;
+                $available = $global->pale - $sumGlobalType;
+                $data['error_message'] = "Lo sentimos, pero excedió el límite global de ventas semanales para Pale. ($available puntos disponibles)";
+                return $data;
+            }
+
+            if($type == 'Tripleta' && $global->tripleta < ($sumGlobalType + $point*$countLotteryIds)) {
+                $data['success'] = false;
+                $available = $global->tripleta - $sumGlobalType;
+                $data['error_message'] = "Lo sentimos, pero excedió el límite global de ventas semanales para Tripleta. ($available puntos disponibles)";
                 return $data;
             }
         }
