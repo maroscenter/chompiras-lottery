@@ -30,11 +30,20 @@ class HomeController extends Controller
         $userId = $request->user_id;
         $lotteryId = $request->lottery_id;
         $date = $request->date;
+        $user = auth()->user();
 
         $users = User::orderBy('name')->get();
-        $lotteries = Lottery::where('status', 1)->orderBy('name')->get();
 
+        $queryLottery = Lottery::where('status', 1);
         $query = Ticket::query();
+
+        if($user->is_role(2)) {
+            $queryLottery = $queryLottery->where('user_id', $user->id);
+            $query = $query->where('user_id', $user->id);
+        }
+
+
+        $lotteries = $queryLottery->orderBy('name')->get();
 
         if($userId)
             $query = $query->where('user_id', $userId);

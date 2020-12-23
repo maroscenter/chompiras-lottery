@@ -4,34 +4,19 @@
     <div class="container">
         <div class="card mb-3">
             <div class="card-header">
-                Dashboard
+                Reportes
             </div>
             <div class="card-body">
-                <p>Bienvenido, {{ auth()->user()->name }}</p>
+                <p>Ventas por rango</p>
 
-                <p>Seleccione una de las siguientes opciones:</p>
+                <p>Seleccione el rango de fechas:</p>
                 <form class="form-inline" role="search">
                     <div class="form-row">
-                        @if(auth()->user()->is_role(1))
                         <div class="col">
-                            <select name="user_id" id="" class="form-control">
-                                <option value="">Seleccione una opción</option>
-                                @foreach($users as $user)
-                                    <option value="{{ $user->id }}" {{ $user->id == $userId ? 'selected' : '' }}>{{ $user->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        @endif
-                        <div class="col">
-                            <select name="lottery_id" id="" class="form-control">
-                                <option value="">Seleccione una opción</option>
-                                @foreach($lotteries as $lottery)
-                                    <option value="{{ $lottery->id }}" {{ $lottery->id == $lotteryId ? 'selected' : '' }}>{{ $lottery->name }}</option>
-                                @endforeach
-                            </select>
+                            <input type="date" class="form-control" id="start_date" name="start_date" value="{{ $startDate ?? date('Y-m-d') }}">
                         </div>
                         <div class="col">
-                            <input type="date" class="form-control" id="date" name="date" value="{{ $date }}">
+                            <input type="date" class="form-control" id="ending_date" name="ending_date" value="{{ $endingDate ?? date('Y-m-d') }}">
                         </div>
                         <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
                     </div>
@@ -67,9 +52,33 @@
             <div class="card-body">
                 <p>A continuación, un listado de las últimos tickets vendidos.</p>
 
-                @include('includes.sold_tickets')
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Nro Ticket</th>
+                        <th>Vendedor</th>
+                        <th>Loterías</th>
+                        <th>Fecha Compra</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($tickets as $ticket)
+                        <tr>
+                            <td>{{ $ticket->id }}</td>
+                            <td>{{ $ticket->user->name }}</td>
+                            <td>
+                                @foreach($ticket->lotteries as $lottery)
+                                    {{ $lottery->name }}{{ !$loop->last ? ', ' : '' }}
+                                @endforeach
+                            </td>
+                            <td>{{ $ticket->created_at }}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 @endsection
-
+@section('scripts')
+@endsection

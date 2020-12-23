@@ -51,6 +51,13 @@ Route::group(['middleware' => 'auth'], function () {
     });
 });
 
+Route::group(['middleware' => 'auth', 'namespace' => 'Report'], function () {
+    //reports
+    Route::group(['prefix' => 'report'], function () {
+        Route::get('sales', 'SaleController@index');
+    });
+});
+
 // Dashboard links
 Route::get('/users', 'UserController@index');
 Route::get('/user/{id}/lists', 'UserController@lists');
