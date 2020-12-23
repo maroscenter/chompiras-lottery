@@ -35,7 +35,7 @@ class SalesLimitController extends Controller
 
         $sellerIds = $request->seller_ids;
 
-        if (!$request->has('sellet_ids'))
+        if (!$request->has('seller_ids'))
             SalesLimit::whereNotNull('user_id')->delete();
 
         if($sellerIds) {

@@ -181,7 +181,7 @@
                 $tBody.append('<tr>\n' +
                     '<td>'+$type.val()+'<input type="hidden" name="type[]" value="'+$type.val()+'"></td>\n' +
                     '<td>'+$number.val()+'<input type="hidden" name="number[]" value="'+$number.val()+'"></td>\n' +
-                    '<td>'+$points.val()+'<input type="hidden" name="point[]" value="'+$points.val()+'"></td>\n' +
+                    '<td>'+$points.val()+'<input type="hidden" name="points[]" value="'+$points.val()+'"></td>\n' +
                     '<td>\n' +
                     '<button class="btn btn-sm btn-danger" type="button" title="Eliminar"\n' +
                     'data-delete="">\n' +
@@ -213,7 +213,7 @@
                 let play = {
                     type : $(tr).find('[name="type[]"]').val(),
                     number : $(tr).find('[name="number[]"]').val(),
-                    point : $(tr).find('[name="point[]"]').val(),
+                    points : $(tr).find('[name="points[]"]').val(),
                 };
 
                 plays.push(play);
