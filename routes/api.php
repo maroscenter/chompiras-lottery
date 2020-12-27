@@ -43,6 +43,8 @@ Route::group([
 ], function() {
     //Sales Limit
     Route::get('sales-limit', 'Api\SalesLimitController@show');
+    //list sold tickets
+    Route::get('/sold-tickets', 'Api\TicketController@index');
     //register tickets
     Route::post('/tickets', 'Api\TicketController@store');
     //delete tickets
@@ -50,5 +52,6 @@ Route::group([
     //earnings
     Route::get('earnings', 'Api\UserController@earning');
     Route::get('winners', 'Api\UserController@winners');
+    Route::get('paid/{id}', 'Api\WinnerController@paid');
 });
 

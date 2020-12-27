@@ -23,6 +23,9 @@
                     <li class="nav-item {{ request()->is('*sales') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ url('report/sales') }}">Ventas por rango</a>
                     </li>
+                    <li class="nav-item {{ request()->is('*winners') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ url('winners') }}">Números ganadores</a>
+                    </li>
                     @if(auth()->user()->is_role(1))
                         <li class="nav-item {{ request()->is('sales-limit*') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ url('sales-limit') }}">Límite de ventas</a>

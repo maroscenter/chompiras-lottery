@@ -38,6 +38,8 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Seller'], function () {
         Route::post('create', 'TicketController@store');
         Route::get('{id}/delete', 'TicketController@delete');
     });
+    //winners
+    Route::get('winners', 'WinnerController@index');
 });
 Route::group(['middleware' => 'auth'], function () {
     //sales limit
@@ -48,6 +50,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('', 'RaffleController@index');
         Route::get('create', 'RaffleController@create');
         Route::post('create', 'RaffleController@store');
+        Route::get('{id}', 'RaffleController@show');
     });
 });
 

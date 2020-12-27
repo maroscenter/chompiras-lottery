@@ -14,9 +14,32 @@ use App\Http\Controllers\Controller;
 
 class TicketController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        dd(Carbon::parse("13:14:00"));
+        $startDate = $request->start_date;
+        $endingDate = $request->ending_date;
+        $user = $request->user();
+
+        $query = Ticket::query();
+
+        if($user->is_role(2)) {
+            $query = $query->where('user_id', $user->id);
+        }
+
+        if($startDate && $endingDate) {
+            $carbonStartDate = Carbon::createFromFormat('Y-m-d', $startDate)->startOfDay();
+            $carbonEndningDate = Carbon::createFromFormat('Y-m-d', $endingDate)->endOfDay();
+            $query = $query->whereBetween('created_at', [$carbonStartDate, $carbonEndningDate]);
+        }
+
+        $totalPoints = $query->sum('total_points');
+
+        $tickets = $query->orderBy('created_at', 'desc')->get();
+
+        $data['tickets'] = $tickets;
+        $data['totalPoints'] = $totalPoints;
+
+        return $data;
     }
     public function store(Request $request)
     {

@@ -47,10 +47,10 @@
 
         <div class="card">
             <div class="card-header">
-                Tickets vendidos
+                Tickets vendidos ({{ $tickets->count() }})
             </div>
             <div class="card-body">
-                <p>A continuación, un listado de las últimos tickets vendidos.</p>
+                <p>Total de puntos: {{ $totalPoints }}</p>
 
                 <table class="table table-bordered">
                     <thead>

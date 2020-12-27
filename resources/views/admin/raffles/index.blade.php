@@ -6,7 +6,7 @@
             <div class="card-header">Listado de sorteos</div>
             <div class="card-body">
                 <div class="form-group">
-                    <a href="{{ url('raffles/create') }}" class="btn btn-sm btn-success pull-right">
+                    <a href="{{ url('raffles/create') }}" class="btn btn-sm btn-success pull-right mb-3">
                         <i class="fa fa-plus"></i>
                         Registrar nuevo sorteo
                     </a>
@@ -20,6 +20,7 @@
                         <th>Número 02</th>
                         <th>Número 03</th>
                         <th>Fecha y hora</th>
+                        <th>Opción</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -30,6 +31,12 @@
                             <td>{{ $raffle->number_2 }}</td>
                             <td>{{ $raffle->number_3 }}</td>
                             <td>{{ $raffle->datetime }}</td>
+                            <td>
+                                <a href="/raffles/{{ $raffle->id }}" class="btn btn-primary btn-sm">
+                                    <i class="fa fa-eye"></i>
+                                    Ver ganadores
+                                </a>
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>

@@ -76,6 +76,13 @@ class RaffleController extends Controller
         return redirect('raffles');
     }
 
+    public function show($id)
+    {
+        $raffle = Raffle::findOrFail($id);
+
+        return view('admin.raffles.show', compact('raffle'));
+    }
+
     function registerTripletaWinners($ticketIds, $numbers, $prizeFirst, $prizeSecond, $lotteryId, $raffleId)
     {
         $ticketPlays = TicketPlay::whereIn('ticket_id', $ticketIds)

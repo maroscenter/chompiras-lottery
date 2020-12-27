@@ -27,9 +27,11 @@ class SaleController extends Controller
             $query = $query->whereBetween('created_at', [$carobStartDate, $carbonEndningDate]);
         }
 
+        $totalPoints = $query->sum('total_points');
+
         $tickets = $query->orderBy('created_at', 'desc')->get();
 
         return view('report.sales',
-            compact('tickets', 'userId', 'startDate', 'endingDate'));
+            compact('tickets', 'userId', 'startDate', 'endingDate', 'totalPoints'));
     }
 }

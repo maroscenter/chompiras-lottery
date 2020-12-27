@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Winner extends Model
 {
+    protected $fillable = [
+        'paid'
+    ];
+
     protected $with = [
         'ticket_play', 'lottery', 'raffle'
     ];
@@ -23,5 +27,10 @@ class Winner extends Model
     public function raffle()
     {
         return $this->belongsTo(Raffle::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
