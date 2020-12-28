@@ -18,12 +18,12 @@ class LotteryController extends Controller
 
         $lotteries = $user->lotteries;
 
-        return view('seller.lottery.index', compact('lotteries'));
+        return view('admin.lottery.index', compact('lotteries'));
     }
 
     public function create()
     {
-        return view('seller.lottery.create');
+        return view('admin.lottery.create');
     }
 
     public function store(Request $request)
@@ -87,7 +87,7 @@ class LotteryController extends Controller
     {
         $lottery = Lottery::findOrFail($id);
 
-        return view('seller.lottery.edit', compact('lottery'));
+        return view('admin.lottery.edit', compact('lottery'));
     }
 
     public function update(Request $request, $id)
