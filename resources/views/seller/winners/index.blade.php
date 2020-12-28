@@ -14,6 +14,7 @@
                         <th>Tipo Jugada</th>
                         <th>Puntos Jugada</th>
                         <th>Número jugado</th>
+                        <th>Fecha y hora</th>
                         <th class="text-right">Premio</th>
                         <th class="text-center">Opciones</th>
                     </tr>
@@ -26,6 +27,7 @@
                             <td>{{ $winner->ticket_play->type }}</td>
                             <td>{{ $winner->ticket_play->points }}</td>
                             <td>{{ $winner->ticket_play->number }}</td>
+                            <td>{{ $winner->created_at }}</td>
                             <td class="text-right">$ {{ number_format($winner->reward, 2, ',', ' ') }}</td>
                             <td class="text-center">
                                 @if($winner->paid)
