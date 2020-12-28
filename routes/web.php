@@ -24,14 +24,6 @@ Auth::routes(['register' => false]);
 Route::get('/home', 'HomeController@index');
 
 Route::group(['middleware' => 'auth', 'namespace' => 'Seller'], function () {
-    //lotteries
-    Route::group(['prefix' => 'lotteries'], function () {
-        Route::get('', 'LotteryController@index');
-        Route::get('create', 'LotteryController@create');
-        Route::post('create', 'LotteryController@store');
-        Route::get('{id}/edit', 'LotteryController@edit');
-        Route::post('{id}/edit', 'LotteryController@update');
-    });
     //tickets
     Route::group(['prefix' => 'tickets'], function () {
         Route::get('create', 'TicketController@create');
@@ -41,12 +33,20 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Seller'], function () {
     //winners
     Route::get('winners', 'WinnerController@index');
 });
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth', 'admin'], 'namespace' => 'Admin'], function () {
+    //lotteries
+    Route::group(['prefix' => 'lotteries'], function () {
+        Route::get('', 'LotteryController@index');
+        Route::get('create', 'LotteryController@create');
+        Route::post('create', 'LotteryController@store');
+        Route::get('{id}/edit', 'LotteryController@edit');
+        Route::post('{id}/edit', 'LotteryController@update');
+    });
     //sales limit
     Route::get('sales-limit', 'SalesLimitController@index');
     Route::post('sales-limit', 'SalesLimitController@update');
     //raffles
-    Route::group(['prefix' => 'raffles', 'namespace' => 'Admin'], function () {
+    Route::group(['prefix' => 'raffles'], function () {
         Route::get('', 'RaffleController@index');
         Route::get('create', 'RaffleController@create');
         Route::post('create', 'RaffleController@store');

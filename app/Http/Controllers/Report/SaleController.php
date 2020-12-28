@@ -32,6 +32,6 @@ class SaleController extends Controller
         $tickets = $query->orderBy('created_at', 'desc')->get();
 
         return view('report.sales',
-            compact('tickets', 'userId', 'startDate', 'endingDate', 'totalPoints'));
+            compact('tickets', 'startDate', 'endingDate', 'totalPoints'));
     }
 }

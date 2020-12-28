@@ -14,9 +14,11 @@
                     <li class="nav-item {{ request()->is('home') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ url('home') }}">Dashboard <span class="sr-only">(current)</span></a>
                     </li>
+                    @if(auth()->user()->is_role(1))
                     <li class="nav-item {{ request()->is('lotteries*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ url('lotteries') }}">Loterías</a>
                     </li>
+                    @endif
                     <li class="nav-item {{ request()->is('tickets*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ url('tickets/create') }}">Tickets</a>
                     </li>

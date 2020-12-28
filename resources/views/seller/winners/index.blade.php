@@ -13,7 +13,7 @@
                         <th>Lotería</th>
                         <th>Tipo Jugada</th>
                         <th>Puntos Jugada</th>
-                        <th>Puntos Jugada</th>
+                        <th>Número jugado</th>
                         <th class="text-right">Premio</th>
                         <th class="text-center">Opciones</th>
                     </tr>
