@@ -15,7 +15,7 @@ class SalesLimitController extends Controller
 
         $salesLimits = SalesLimit::whereNotNull('user_id')->get();
 
-        return view('sales-limit.index', compact('limits', 'salesLimits'));
+        return view('admin.sales-limit.index', compact('limits', 'salesLimits'));
 
     }
 
