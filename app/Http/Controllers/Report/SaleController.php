@@ -22,9 +22,9 @@ class SaleController extends Controller
         }
 
         if($startDate && $endingDate) {
-            $carobStartDate = Carbon::createFromFormat('Y-m-d', $startDate)->startOfDay();
+            $carbonStartDate = Carbon::createFromFormat('Y-m-d', $startDate)->startOfDay();
             $carbonEndningDate = Carbon::createFromFormat('Y-m-d', $endingDate)->endOfDay();
-            $query = $query->whereBetween('created_at', [$carobStartDate, $carbonEndningDate]);
+            $query = $query->whereBetween('created_at', [$carbonStartDate, $carbonEndningDate]);
         }
 
         $totalPoints = $query->sum('total_points');
