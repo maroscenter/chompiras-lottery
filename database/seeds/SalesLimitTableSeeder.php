@@ -22,10 +22,10 @@ class SalesLimitTableSeeder extends Seeder
 
         //individual
         SalesLimit::create([
-            'quiniela' => 0,
-            'pale' => 0,
-            'super_pale' => 0,
-            'tripleta' => 0,
+            'quiniela' => 100,
+            'pale' => 10,
+            'super_pale' => 10,
+            'tripleta' => 10,
         ]);
     }
 }

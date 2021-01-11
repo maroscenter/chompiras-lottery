@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
 
             $table->unsignedTinyInteger('role')->default(2); // 1: admin | 2: seller
 
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -34,6 +34,16 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Seller'], function () {
     Route::get('winners', 'WinnerController@index');
 });
 Route::group(['middleware' => ['auth', 'admin'], 'namespace' => 'Admin'], function () {
+    //users
+    Route::group(['prefix' => 'users'], function () {
+        Route::get('', 'UserController@index');
+        Route::get('create', 'UserController@create');
+        Route::post('create', 'UserController@store');
+        Route::get('{id}/edit', 'UserController@edit');
+        Route::post('{id}/edit', 'UserController@update');
+        Route::get('{id}/deactivate', 'UserController@deactivate');
+        Route::get('{id}/activate', 'UserController@activate');
+    });
     //lotteries
     Route::group(['prefix' => 'lotteries'], function () {
         Route::get('', 'LotteryController@index');
@@ -62,8 +72,8 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Report'], function () {
 });
 
 // Dashboard links
-Route::get('/users', 'UserController@index');
-Route::get('/user/{id}/lists', 'UserController@lists');
+//Route::get('/users', 'UserController@index');
+//Route::get('/user/{id}/lists', 'UserController@lists');
 Route::get('/dates', 'DateController@index');
 
 // Sent list routes
