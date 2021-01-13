@@ -262,10 +262,10 @@ class TicketController extends Controller
             $earning = new Earning();
             $earning->user_id = $user->id;
         }
-        $earning->quantity_tickets =+ 1;
-        $earning->quantity_points =+ $ticket->total_points;
-        $earning->income =+ $ticket->total_points;
-        $earning->commission_earned =+ $ticket->commission_earned;
+        $earning->quantity_tickets += 1;
+        $earning->quantity_points += $ticket->total_points;
+        $earning->income += $ticket->total_points;
+        $earning->commission_earned += $ticket->commission_earned;
         $earning->save();
 
         $data['success'] = true;

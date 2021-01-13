@@ -15,7 +15,7 @@ class UserController extends Controller
         $start = $request->start;
         $end = $request->end;
 
-        $query = $user->earning();
+        $query = $user->tickets();
 
         if($start && $end) {
             $carbonStart = Carbon::createFromFormat('Y-m-d', $start)->startOfDay();
@@ -23,7 +23,13 @@ class UserController extends Controller
             $query = $query->whereBetween('created_at', [$carbonStart, $carbonEnd]);
         }
 
-        return response()->json($query->get());
+        $data['ticket_earnings'] = $query->get();
+        $data['total'] = [
+            'earnings' => $query->sum('total_points'),
+            'commission' => $query->sum('commission_earned')
+        ];
+
+        return response()->json($data);
     }
 
     public function winners(Request $request)
