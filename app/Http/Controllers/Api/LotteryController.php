@@ -11,6 +11,7 @@ class LotteryController extends Controller
     public function index() 
     {
         return Lottery::all([
+            'id',
             'name',
             'abbreviated',
             'code'       
