@@ -59,9 +59,9 @@ class TicketController extends Controller
             return $data;
         }
 
-        if (!$request->has('plays')) {
+        if (!$plays || sizeof($plays)===0) {
             $data['success'] = false;
-            $data['error_message'] = "Es necesario ingresar una jugada";
+            $data['error_message'] = "Es necesario ingresar al menos una jugada";
             return $data;
         }
 
