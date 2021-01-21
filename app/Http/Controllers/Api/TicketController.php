@@ -53,7 +53,7 @@ class TicketController extends Controller
         $now = Carbon::now();
         $nameDay = Carbon::now()->format('l');
 
-        if (!$request->has('lotteries')) {
+        if (!$lotteryIds || sizeof($lotteryIds)===0) {
             $data['success'] = false;
             $data['error_message'] = "Es necesario seleccionar al menos una lotería";
             return $data;
