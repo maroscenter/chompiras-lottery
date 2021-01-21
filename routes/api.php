@@ -43,6 +43,6 @@ Route::group([
     Route::get('paid/{id}', 'Api\WinnerController@paid');
     
     // Lotteries
-    Route::get('earnings', 'Api\LotteryController@index');
+    Route::get('lotteries', 'Api\LotteryController@index');
 });
 
