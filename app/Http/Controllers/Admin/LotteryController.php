@@ -14,8 +14,6 @@ class LotteryController extends Controller
 {
     public function index()
     {
-//        $user = auth()->user();
-
         $lotteries = Lottery::all();
 
         return view('admin.lottery.index', compact('lotteries'));

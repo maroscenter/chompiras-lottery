@@ -12,7 +12,7 @@ class SalesLimitTableSeeder extends Seeder
      */
     public function run()
     {
-        //global
+        // global
         SalesLimit::create([
             'quiniela' => 2000,
             'pale' => 100,
@@ -20,7 +20,7 @@ class SalesLimitTableSeeder extends Seeder
             'tripleta' => 10,
         ]);
 
-        //individual
+        // individual
         SalesLimit::create([
             'quiniela' => 100,
             'pale' => 10,

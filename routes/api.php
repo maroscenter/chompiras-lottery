@@ -25,17 +25,24 @@ Route::group([
 Route::group([
     'middleware' => 'auth:api'
 ], function() {
-    //Sales Limit
+    // Sales Limits
     Route::get('sales-limit', 'Api\SalesLimitController@show');
-    //list sold tickets
+    
+    // Sold tickets list
     Route::get('/sold-tickets', 'Api\TicketController@index');
-    //register tickets
+    
+    // Register a ticket
     Route::post('/tickets', 'Api\TicketController@store');
-    //delete tickets
+    
+    // Delete a ticket by id
     Route::post('/tickets/{id}/delete', 'Api\TicketController@delete');
-    //earnings
+    
+    // Earnings
     Route::get('earnings', 'Api\UserController@earning');
     Route::get('winners', 'Api\UserController@winners');
     Route::get('paid/{id}', 'Api\WinnerController@paid');
+    
+    // Lotteries
+    Route::get('earnings', 'Api\LotteryController@index');
 });
 
