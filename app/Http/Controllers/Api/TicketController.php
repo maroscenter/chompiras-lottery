@@ -48,6 +48,10 @@ class TicketController extends Controller
     
     public function show(Ticket $ticket)
     {
+        $ticket->plays = $ticket->plays()->get([
+            'number', 'points', 'type'
+        ]);
+        
         return $ticket;
     }
     
