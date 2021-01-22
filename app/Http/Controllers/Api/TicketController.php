@@ -48,11 +48,16 @@ class TicketController extends Controller
     
     public function show(Ticket $ticket)
     {
-        $ticket->plays = $ticket->plays()->get([
+        $plays = $ticket->plays()->get([
             'number', 'points', 'type'
         ]);
         
-        return $ticket;
+        unset($ticket->lotteries);
+        unset($ticket->plays);
+        unset($ticket->updated_at);
+        unset($ticket->deleted_at);
+        
+        return compact('ticket', 'plays');
     }
     
     public function store(Request $request)
