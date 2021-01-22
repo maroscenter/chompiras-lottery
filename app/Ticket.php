@@ -40,7 +40,7 @@ class Ticket extends Model
             ->belongsToMany(Lottery::class, 'ticket_lottery', 'ticket_id', 'lottery_id');
     }
     
-    public function getLotteriesList() 
+    public function getLotteriesListAttribute()
     {
         $list = "";
         
