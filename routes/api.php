@@ -32,6 +32,8 @@ Route::group([
     Route::get('/tickets', 'Api\TicketController@index');    
     // Register a ticket
     Route::post('/tickets', 'Api\TicketController@store');
+    // Show a ticket
+    Route::get('/tickets/{ticket}', 'Api\TicketController@show');
     
     // Delete a ticket by id
     Route::post('/tickets/{id}/delete', 'Api\TicketController@delete');

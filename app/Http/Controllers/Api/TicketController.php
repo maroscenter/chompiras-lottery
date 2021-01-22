@@ -46,6 +46,11 @@ class TicketController extends Controller
         return $data;
     }
     
+    public function show(Ticket $ticket)
+    {
+        return $ticket;
+    }
+    
     public function store(Request $request)
     {
         // Get params
