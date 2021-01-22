@@ -14,7 +14,7 @@ class LotteryController extends Controller
             'id',
             'name',
             'abbreviated',
-            'code'       
+            'code'
         ]);
     }
 }

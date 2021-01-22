@@ -29,8 +29,7 @@ Route::group([
     Route::get('sales-limit', 'Api\SalesLimitController@show');
     
     // Sold tickets list
-    Route::get('/sold-tickets', 'Api\TicketController@index');
-    
+    Route::get('/tickets', 'Api\TicketController@index');    
     // Register a ticket
     Route::post('/tickets', 'Api\TicketController@store');
     
