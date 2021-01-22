@@ -12,6 +12,10 @@ class Ticket extends Model
     protected $casts = [
         'created_at' => 'datetime:Y-m-d H:i:s',
     ];
+    
+    protected $appends = [
+        'lotteries_list'
+    ];
 
     public function user()
     {
@@ -32,7 +36,19 @@ class Ticket extends Model
 
     public function lotteries()
     {
-        return $this->belongsToMany(Lottery::class, 'ticket_lottery', 'ticket_id', 'lottery_id');
+        return $this
+            ->belongsToMany(Lottery::class, 'ticket_lottery', 'ticket_id', 'lottery_id');
+    }
+    
+    public function getLotteriesList() 
+    {
+        $list = "";
+        
+        foreach ($this->lotteries as $lottery) {
+            $list .=  ($lottery->abbreviated .  ' ');
+        }        
+        
+        return $list;
     }
 
     public function getSumPointsAttribute()

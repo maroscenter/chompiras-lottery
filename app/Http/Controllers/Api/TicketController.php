@@ -34,9 +34,11 @@ class TicketController extends Controller
 
         $totalPoints = $query->sum('total_points');
 
-        $tickets = $query->orderBy('created_at', 'desc')->get([
-            'id', 'total_points', 'commission_earned', 'user_id', 'created_at'
-        ]);
+        $tickets = $query
+            ->with('lotteries')
+            ->orderBy('created_at', 'desc')->get([
+                'id', 'total_points', 'commission_earned', 'user_id', 'created_at'
+            ]);
 
         $data['tickets'] = $tickets;
         $data['totalPoints'] = $totalPoints;
