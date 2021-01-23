@@ -102,19 +102,19 @@ class TicketController extends Controller
 
             if ($type == TicketPlay::TYPE_QUINIELA && strlen($number) != 2) {
                 $data['success'] = false;
-                $data['error_message'] = "Se aceptan números de 2 digitos para Quiniela";
+                $data['error_message'] = "Sólo se admiten númeross de 2 dígitos para Quiniela";
                 return $data;
             }
 
             if ($type == TicketPlay::TYPE_PALE && strlen($number) != 4) {
                 $data['success'] = false;
-                $data['error_message'] = "Se aceptan números de 4 digitos para Pale";
+                $data['error_message'] = "Sólo se admiten númeross de 4 dígitos para Pale";
                 return $data;
             }
 
             if ($type == TicketPlay::TYPE_TRIPLETA && strlen($number) != 6) {
                 $data['success'] = false;
-                $data['error_message'] = "Se aceptan números de 6 digitos para Tripleta";
+                $data['error_message'] = "Sólo se admiten númeross de 6 dígitos para Tripleta";
                 return $data;
             }
         }
