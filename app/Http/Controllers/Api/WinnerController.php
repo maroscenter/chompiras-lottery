@@ -15,23 +15,25 @@ class WinnerController extends Controller
 
         if (!$winner) {
             $data['success'] = false;
-            $data['error_message'] = "No existe el premio con id:$id";
+            $data['error_message'] = "No existe el premio con id $id";
             return $data;
         }
 
         if ($winner->user_id != $user->id) {
             $data['success'] = false;
-            $data['error_message'] = "No puede pagar el premio $id";
+            $data['error_message'] = "No puede pagar el premio #$id";
             return $data;
         }
 
         if ($winner->paid) {
             $data['success'] = false;
-            $data['error_message'] = "El premio ($id) ya fue pagado";
+            $data['error_message'] = "El premio #$id ya fue pagado";
             return $data;
         }
 
-        $winner->update(['paid' => true]);
+        $winner->update([
+            'paid' => true
+        ]);
 
         $data['success'] = true;
         return $data;
