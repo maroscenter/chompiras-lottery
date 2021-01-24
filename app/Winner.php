@@ -11,7 +11,8 @@ class Winner extends Model
     ];
 
     protected $casts = [
-        'paid' => 'boolean'
+        'paid' => 'boolean',
+        'created_at' => 'datetime:Y-m-d H:i:s'
     ];
 
     protected $with = [
