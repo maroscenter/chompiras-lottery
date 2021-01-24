@@ -14,34 +14,35 @@
 
                 <p>Listado de loterías de la plataforma.</p>
 
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Abreviado</th>
-                        <th>Código</th>
-                        <th>Estatus</th>
-                        <th class="text-center">Opciones</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach ($lotteries as $lottery)
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
                         <tr>
-                            <td>{{ $lottery->name }}</td>
-                            <td>{{ $lottery->abbreviated }}</td>
-                            <td>{{ $lottery->code }}</td>
-                            <td>{{ $lottery->status ? 'Activo' : 'Inactivo' }}</td>
-                            <td class="text-center">
-                                <a href="{{ url('lotteries/'.$lottery->id.'/edit') }}" class="btn btn-primary btn-sm">
-                                    <i class="fa fa-edit"></i>
-                                    Editar
-                                </a>
-                            </td>
+                            <th>Nombre</th>
+                            <th>Abreviado</th>
+                            <th>Código</th>
+                            <th>Estatus</th>
+                            <th class="text-center">Opciones</th>
                         </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-
+                        </thead>
+                        <tbody>
+                        @foreach ($lotteries as $lottery)
+                            <tr>
+                                <td>{{ $lottery->name }}</td>
+                                <td>{{ $lottery->abbreviated }}</td>
+                                <td>{{ $lottery->code }}</td>
+                                <td>{{ $lottery->status ? 'Activo' : 'Inactivo' }}</td>
+                                <td class="text-center">
+                                    <a href="{{ url('lotteries/'.$lottery->id.'/edit') }}" class="btn btn-primary btn-sm">
+                                        <i class="fa fa-edit"></i>
+                                        Editar
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

@@ -12,41 +12,42 @@
                     </a>
                 </div>
                 <p>Listado de usuarios de la plataforma.</p>
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>E-mail</th>
-                        <th>Nombre completo</th>
-                        <th>Opciones</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach ($users as $user)
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
                         <tr>
-                            <td>{{ $user->email }}</td>
-                            <td>{{ $user->name }}</td>
-                            <td>
-                                <a href="{{ url('users/'.$user->id.'/edit') }}" class="btn btn-primary btn-sm">
-                                    <span class="fa fa-edit"></span>
-                                    Editar
-                                </a>
-                                @if($user->deleted_at)
-                                    <button data-activate="{{ url('users/'.$user->id.'/activate') }}" class="btn btn-success btn-sm">
-                                        <span class="fa fa-check"></span>
-                                        Activar
-                                    </button>
-                                @else
-                                    <button data-deactivate="{{ url('users/'.$user->id.'/deactivate') }}"  class="btn btn-danger btn-sm">
-                                        <span class="fa fa-times"></span>
-                                        Desactivar
-                                    </button>
-                                @endif
-                            </td>
+                            <th>E-mail</th>
+                            <th>Nombre completo</th>
+                            <th>Opciones</th>
                         </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-
+                        </thead>
+                        <tbody>
+                        @foreach ($users as $user)
+                            <tr>
+                                <td>{{ $user->email }}</td>
+                                <td>{{ $user->name }}</td>
+                                <td>
+                                    <a href="{{ url('users/'.$user->id.'/edit') }}" class="btn btn-primary btn-sm">
+                                        <span class="fa fa-edit"></span>
+                                        Editar
+                                    </a>
+                                    @if($user->deleted_at)
+                                        <button data-activate="{{ url('users/'.$user->id.'/activate') }}" class="btn btn-success btn-sm">
+                                            <span class="fa fa-check"></span>
+                                            Activar
+                                        </button>
+                                    @else
+                                        <button data-deactivate="{{ url('users/'.$user->id.'/deactivate') }}"  class="btn btn-danger btn-sm">
+                                            <span class="fa fa-times"></span>
+                                            Desactivar
+                                        </button>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

@@ -52,30 +52,32 @@
             <div class="card-body">
                 <p>Total de puntos: {{ $totalPoints }}</p>
 
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>Nro Ticket</th>
-                        <th>Vendedor</th>
-                        <th>Loterías</th>
-                        <th>Fecha Compra</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach ($tickets as $ticket)
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
                         <tr>
-                            <td>{{ $ticket->id }}</td>
-                            <td>{{ $ticket->user->name }}</td>
-                            <td>
-                                @foreach($ticket->lotteries as $lottery)
-                                    {{ $lottery->name }}{{ !$loop->last ? ', ' : '' }}
-                                @endforeach
-                            </td>
-                            <td>{{ $ticket->created_at }}</td>
+                            <th>Nro Ticket</th>
+                            <th>Vendedor</th>
+                            <th>Loterías</th>
+                            <th>Fecha Compra</th>
                         </tr>
-                    @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        @foreach ($tickets as $ticket)
+                            <tr>
+                                <td>{{ $ticket->id }}</td>
+                                <td>{{ $ticket->user->name }}</td>
+                                <td>
+                                    @foreach($ticket->lotteries as $lottery)
+                                        {{ $lottery->name }}{{ !$loop->last ? ', ' : '' }}
+                                    @endforeach
+                                </td>
+                                <td>{{ $ticket->created_at }}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
