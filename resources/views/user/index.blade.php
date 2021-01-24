@@ -17,35 +17,36 @@
 
                         <p>Listado de usuarios de la plataforma.</p>
 
-                        <table class="table table-bordered">
-                            <thead>
-                            <tr>
-                                <th>E-mail</th>
-                                <th>Nombre completo</th>
-                                <th>Opciones</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach ($users as $user)
-                            <tr>
-                                <td>{{ $user->email }}</td>
-                                <td>{{ $user->name }}</td>
-                                <td>
-                                    <a href="/user/{{ $user->id }}/lists" class="btn btn-primary btn-sm">
-                                        <span class="glyphicon glyphicon-info-sign"></span>
-                                        Ver listas
-                                    </a>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>E-mail</th>
+                                    <th>Nombre completo</th>
+                                    <th>Opciones</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach ($users as $user)
+                                    <tr>
+                                        <td>{{ $user->email }}</td>
+                                        <td>{{ $user->name }}</td>
+                                        <td>
+                                            <a href="/user/{{ $user->id }}/lists" class="btn btn-primary btn-sm">
+                                                <span class="glyphicon glyphicon-info-sign"></span>
+                                                Ver listas
+                                            </a>
 
-                                    <a href="/user/{{ $user->id }}/edit" disabled class="btn btn-default btn-sm">
-                                        <span class="glyphicon glyphicon-edit"></span>
-                                        Editar
-                                    </a>
-                                </td>
-                            </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-
+                                            <a href="/user/{{ $user->id }}/edit" disabled class="btn btn-default btn-sm">
+                                                <span class="glyphicon glyphicon-edit"></span>
+                                                Editar
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 

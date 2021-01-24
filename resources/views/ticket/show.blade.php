@@ -44,24 +44,27 @@
                             {{ $ticket->created_at }}
                         </p>
 
-                        <table class="table table-bordered">
-                            <thead>
-                            <tr>
-                                <th>Tipo</th>
-                                <th>Num</th>
-                                <th>Ptos</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach ($ticket->plays as $play)
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
                                 <tr>
-                                    <td>{{ $play->type }}</td>
-                                    <td>{{ $play->number }}</td>
-                                    <td>{{ $play->points }}</td>
+                                    <th>Tipo</th>
+                                    <th>Num</th>
+                                    <th>Ptos</th>
                                 </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                @foreach ($ticket->plays as $play)
+                                    <tr>
+                                        <td>{{ $play->type }}</td>
+                                        <td>{{ $play->number }}</td>
+                                        <td>{{ $play->points }}</td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
                         <p>
                             <b>Total:</b>
                             $ {{ $ticket->sum_points }}

@@ -6,47 +6,48 @@
             <div class="card-header">Número ganadores</div>
             <div id="general-alert"></div>
             <div class="card-body">
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Lotería</th>
-                        <th>Tipo Jugada</th>
-                        <th>Puntos Jugada</th>
-                        <th>Número jugado</th>
-                        <th>Fecha y hora</th>
-                        <th class="text-right">Premio</th>
-                        <th class="text-center">Opciones</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach ($winners as $winner)
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
                         <tr>
-                            <td>{{ $winner->id }}</td>
-                            <td>{{ $winner->lottery->name }}</td>
-                            <td>{{ $winner->ticket_play->type }}</td>
-                            <td>{{ $winner->ticket_play->points }}</td>
-                            <td>{{ $winner->ticket_play->number }}</td>
-                            <td>{{ $winner->created_at }}</td>
-                            <td class="text-right">$ {{ number_format($winner->reward, 2, ',', ' ') }}</td>
-                            <td class="text-center">
-                                @if($winner->paid)
-                                    <button class="btn btn-primary btn-sm" disabled>
-                                        <i class="fa fa-money"></i>
-                                        Pagado
-                                    </button>
-                                @else
-                                    <a data-delete="{{ $winner->id }}" class="btn btn-primary btn-sm">
-                                        <i class="fa fa-money"></i>
-                                        Pagar
-                                    </a>
-                                @endif
-                            </td>
+                            <th>ID</th>
+                            <th>Lotería</th>
+                            <th>Tipo Jugada</th>
+                            <th>Puntos Jugada</th>
+                            <th>Número jugado</th>
+                            <th>Fecha y hora</th>
+                            <th class="text-right">Premio</th>
+                            <th class="text-center">Opciones</th>
                         </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-
+                        </thead>
+                        <tbody>
+                        @foreach ($winners as $winner)
+                            <tr>
+                                <td>{{ $winner->id }}</td>
+                                <td>{{ $winner->lottery->name }}</td>
+                                <td>{{ $winner->ticket_play->type }}</td>
+                                <td>{{ $winner->ticket_play->points }}</td>
+                                <td>{{ $winner->ticket_play->number }}</td>
+                                <td>{{ $winner->created_at }}</td>
+                                <td class="text-right">$ {{ number_format($winner->reward, 2, ',', ' ') }}</td>
+                                <td class="text-center">
+                                    @if($winner->paid)
+                                        <button class="btn btn-primary btn-sm" disabled>
+                                            <i class="fa fa-money"></i>
+                                            Pagado
+                                        </button>
+                                    @else
+                                        <a data-delete="{{ $winner->id }}" class="btn btn-primary btn-sm">
+                                            <i class="fa fa-money"></i>
+                                            Pagar
+                                        </a>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
