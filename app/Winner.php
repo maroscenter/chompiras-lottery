@@ -10,6 +10,10 @@ class Winner extends Model
         'paid'
     ];
 
+    protected $casts = [
+        'paid' => 'boolean'
+    ];
+
     protected $with = [
         'ticket_play', 'lottery', 'raffle'
     ];

@@ -35,15 +35,19 @@ class UserController extends Controller
     public function winners(Request $request)
     {
         $user = $request->user();
+        
         $start = $request->start;
         $end = $request->end;
 
         $query = $user->winners();
 
-        if($start && $end) {
+        if ($start && $end) {
             $carbonStart = Carbon::createFromFormat('Y-m-d', $start)->startOfDay();
             $carbonEnd = Carbon::createFromFormat('Y-m-d', $end)->endOfDay();
-            $query = $query->whereBetween('created_at', [$carbonStart, $carbonEnd]);
+            
+            $query = $query->whereBetween('created_at', [
+                $carbonStart, $carbonEnd
+            ]);
         }
 
         return response()->json($query->get());
