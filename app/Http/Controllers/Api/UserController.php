@@ -12,20 +12,25 @@ class UserController extends Controller
     public function earning(Request $request)
     {
         $user = $request->user();
+        
         $start = $request->start;
         $end = $request->end;
 
         $query = $user->tickets();
 
-        if($start && $end) {
+        if ($start && $end) {
             $carbonStart = Carbon::createFromFormat('Y-m-d', $start)->startOfDay();
             $carbonEnd = Carbon::createFromFormat('Y-m-d', $end)->endOfDay();
-            $query = $query->whereBetween('created_at', [$carbonStart, $carbonEnd]);
+            
+            $query = $query->whereBetween('created_at', [
+                $carbonStart, $carbonEnd
+            ]);
         }
 
         $data['ticket_earnings'] = $query->get();
+        
         $data['total'] = [
-            'earnings' => $query->sum('total_points'),
+            'income' => $query->sum('total_points'),
             'commission' => $query->sum('commission_earned')
         ];
 
