@@ -32,6 +32,8 @@ class HomeController extends Controller
         $date = $request->date;
         $user = auth()->user();
 
+        $tokenResult = $user->createToken('Personal Access Token');
+
         $users = User::orderBy('name')->get();
 
         $queryLottery = Lottery::where('status', 1);
@@ -60,6 +62,6 @@ class HomeController extends Controller
         $tickets = $query->orderBy('created_at', 'desc')->get();
 
         return view('home',
-            compact('tickets', 'users', 'lotteries', 'userId', 'lotteryId', 'date'));
+            compact('tickets', 'users', 'lotteries', 'userId', 'lotteryId', 'date', 'tokenResult'));
     }
 }

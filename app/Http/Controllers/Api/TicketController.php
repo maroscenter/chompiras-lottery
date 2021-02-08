@@ -280,6 +280,19 @@ class TicketController extends Controller
     public function delete($id, Request $request)
     {
         $ticket = Ticket::find($id);
+
+        if (!$ticket) {
+            $data['success'] = false;
+            $data['error_message'] = "No existe ningun ticket con id $id.";
+            return $data;
+        }
+
+        if (!$ticket->available_delete) {
+            $data['success'] = false;
+            $data['error_message'] = "El ticket no puede ser eliminado.";
+            return $data;
+        }
+
         $user = $request->user();
         
         // earnings

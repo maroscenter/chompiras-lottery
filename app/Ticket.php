@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -54,6 +55,19 @@ class Ticket extends Model
     public function getSumPointsAttribute()
     {
         return number_format($this->total_points, 2, ',', ' ');
+    }
+
+    public function getAvailableDeleteAttribute()
+    {
+        $max5Mins = $this->created_at > Carbon::now()->subMinutes(5);
+        $isAdmin = auth()->user()->is_role(USER::ADMIN);
+        $playIds = $this->plays()->pluck('id');
+
+        $winner = Winner::whereIn('ticket_play_id', $playIds)
+            ->where('user_id', $this->user_id)
+            ->exists();
+
+        return !$winner && ($isAdmin || $max5Mins);
     }
 
 }

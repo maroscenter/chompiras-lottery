@@ -66,10 +66,58 @@
             </div>
             <div class="card-body">
                 <p>A continuación, un listado de las últimos tickets vendidos.</p>
+                <div id="ticketAlerts"></div>
 
                 @include('includes.sold_tickets')
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    <!-- Sweet alert 2 -->
+    <script src="https://unpkg.com/sweetalert2@7.3.0/dist/sweetalert2.all.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('[data-delete]').on('click', onClickDelete);
+        });
+
+        function onClickDelete() {
+            let urlDelete = $(this).data('delete');
+            swal({
+                title: '¿Seguro que desea eliminar este ticket?',
+                text: "",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Sí, desactivar!'
+            }).then((result) => {
+                if (result.value) {
+                    let $token = @json($tokenResult->accessToken);
+
+                    $.ajax({
+                        type: 'POST',
+                        url: urlDelete,
+                        headers: {'Authorization': 'Bearer '+$token},
+                        data:{
+                            '_token':$('input[name=_token]').val(),
+                        },
+                        success:function (data){
+                            if(!data.success) {
+                                $('#ticketAlerts').html('<div class="alert alert-danger alert-dismissable">' +
+                                    '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>\n' +
+                                    '<strong>'+data.error_message+'</strong>' +
+                                    '</div>');
+                            } else {
+                                window.location.href = "/home";
+                            }
+
+                        }
+                    });
+                }
+            });
+        }
+    </script>
 @endsection
 

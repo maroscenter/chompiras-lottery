@@ -1,4 +1,5 @@
 <div class="table-responsive">
+    @csrf
     <table class="table table-bordered">
         <thead>
         <tr>
@@ -21,10 +22,16 @@
                 </td>
                 <td>{{ $ticket->created_at }}</td>
                 <td>
-                    <a href="/ticket/{{ $ticket->id }}" class="btn btn-primary btn-sm">
+                    <a href="{{ url('ticket/'.$ticket->id) }}" class="btn btn-primary btn-sm">
                         <i class="fa fa-list-ul"></i>
                         Ver detalles
                     </a>
+                    @if($ticket->available_delete)
+                        <button data-delete="{{ url('api/tickets/'.$ticket->id.'/delete') }}" class="btn btn-danger btn-sm">
+                            <i class="fa fa-times"></i>
+                            Anular
+                        </button>
+                    @endif
                 </td>
             </tr>
         @endforeach
