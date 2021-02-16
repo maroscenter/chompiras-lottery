@@ -283,13 +283,13 @@ class TicketController extends Controller
 
         if (!$ticket) {
             $data['success'] = false;
-            $data['error_message'] = "No existe ningun ticket con id $id.";
+            $data['error_message'] = "No existe ningún ticket con id $id.";
             return $data;
         }
 
         if (!$ticket->available_delete) {
             $data['success'] = false;
-            $data['error_message'] = "El ticket no puede ser eliminado.";
+            $data['error_message'] = "El ticket ya no puede ser eliminado.";
             return $data;
         }
 
