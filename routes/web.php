@@ -32,6 +32,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'namespace' => 'Admin'], functi
         Route::post('{id}/edit', 'UserController@update');
         Route::get('{id}/deactivate', 'UserController@deactivate');
         Route::get('{id}/activate', 'UserController@activate');
+        Route::get('{id}/balance', 'UserController@showBalance');
     });
     //lotteries
     Route::group(['prefix' => 'lotteries'], function () {
@@ -58,6 +59,8 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Report'], function () {
     Route::group(['prefix' => 'report'], function () {
         Route::get('sales', 'SaleController@index');
     });
+    //balance sheets
+    Route::get('balance_sheets', 'BalanceSheetController@index');
 });
 
 // Dashboard links

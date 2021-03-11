@@ -45,28 +45,28 @@ class TicketController extends Controller
 
         return $data;
     }
-    
+
     public function show(Ticket $ticket)
     {
         $plays = $ticket->plays()->get([
             'number', 'points', 'type'
         ]);
-        
+
         unset($ticket->lotteries);
         unset($ticket->plays);
         unset($ticket->updated_at);
         unset($ticket->deleted_at);
-        
+
         return compact('ticket', 'plays');
     }
-    
+
     public function store(Request $request)
     {
         // Get params
         $user = $request->user();
         $lotteryIds = $request->input('lotteries');
         $plays = $request->input('plays');
-        
+
         // New registrations are available by intervals, each day
         $now = Carbon::now();
         $nameDay = Carbon::now()->format('l');
@@ -259,6 +259,10 @@ class TicketController extends Controller
         $ticket->commission_earned = $points*$countLotteries*0.15;
         $ticket->save();
 
+        //balance sheets
+        $user->balance -= ($points*$countLotteries*0.85);
+        $user->save();
+
         //earnings
         $earning = $user->earning;
 
@@ -266,7 +270,7 @@ class TicketController extends Controller
             $earning = new Earning();
             $earning->user_id = $user->id;
         }
-        
+
         $earning->quantity_tickets += 1;
         $earning->quantity_points += $ticket->total_points;
         $earning->income += $ticket->total_points;
@@ -294,7 +298,7 @@ class TicketController extends Controller
         }
 
         $user = $request->user();
-        
+
         // earnings
         $earning = $user->earning;
 
@@ -307,6 +311,10 @@ class TicketController extends Controller
         $earning->income -= $ticket->total_points;
         $earning->commission_earned -= $ticket->commission_earned;
         $earning->save();
+
+        //balance sheets
+        $user->balance += ($ticket->total_points - $ticket->commission_earned);
+        $user->save();
 
         $ticket->delete();
 

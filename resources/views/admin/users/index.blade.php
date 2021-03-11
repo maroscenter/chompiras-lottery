@@ -42,6 +42,10 @@
                                             Desactivar
                                         </button>
                                     @endif
+                                    <a href="{{ url('users/'.$user->id.'/balance') }}" class="btn btn-secondary btn-sm">
+                                        <span class="fa fa-dollar"></span>
+                                        Balance Cuenta
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach

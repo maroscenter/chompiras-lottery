@@ -100,4 +100,12 @@ class UserController extends Controller
 
         return back()->with('notification', 'El usuario con sus respectivos procesos se ha restaurado correctamente.');
     }
+
+    public function showBalance($id)
+    {
+        $user = User::withTrashed()->findOrFail($id);
+        $tokenResult = $user->createToken('Personal Access Token');
+
+        return view('admin.users.balance', compact('user', 'tokenResult'));
+    }
 }

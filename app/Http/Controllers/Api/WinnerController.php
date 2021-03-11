@@ -35,6 +35,10 @@ class WinnerController extends Controller
             'paid' => true
         ]);
 
+        //balance sheets
+        $user->balance += $winner->reward;
+        $user->save();
+
         $data['success'] = true;
         return $data;
     }

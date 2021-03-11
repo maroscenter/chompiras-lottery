@@ -36,6 +36,9 @@
                             <a class="nav-link" href="{{ url('raffles') }}">Sorteos</a>
                         </li>
                     @endif
+                    <li class="nav-item {{ request()->is('*balance_sheets') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ url('balance_sheets') }}">Balance de cuenta</a>
+                    </li>
                 @endif
             </ul>
 

@@ -27,23 +27,26 @@ Route::group([
 ], function() {
     // Sales Limits
     Route::get('sales-limit', 'Api\SalesLimitController@show');
-    
+
     // Sold tickets list
-    Route::get('/tickets', 'Api\TicketController@index');    
+    Route::get('/tickets', 'Api\TicketController@index');
     // Register a ticket
     Route::post('/tickets', 'Api\TicketController@store');
     // Show a ticket
     Route::get('/tickets/{ticket}', 'Api\TicketController@show');
-    
+
     // Delete a ticket by id
     Route::post('/tickets/{id}/delete', 'Api\TicketController@delete');
-    
+
     // Earnings
     Route::get('earnings', 'Api\UserController@earning');
     Route::get('winners', 'Api\UserController@winners');
     Route::get('paid/{id}', 'Api\WinnerController@paid');
-    
+
     // Lotteries
     Route::get('lotteries', 'Api\LotteryController@index');
+
+    //register balance
+    Route::post('balance/{userId}', 'Api\BalanceController@update');
 });
 

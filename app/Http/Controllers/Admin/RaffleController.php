@@ -35,7 +35,7 @@ class RaffleController extends Controller
         $n3 = $request->number_3;
         $lotteryId = $request->lottery_id;
         $datetime = $request->datetime;
-        
+
         // register raffle
         $raffle = new Raffle();
         $raffle->number_1 = $n1;
@@ -52,7 +52,8 @@ class RaffleController extends Controller
         $startDate = Carbon::parse($lotteryTime->time)->subDay()->addMinutes(15);
 
         //get ticket_ids
-        $ticketIds = TicketLottery::where('lottery_id', $lotteryId)
+        $ticketIds = TicketLottery::activeTicket()
+            ->where('lottery_id', $lotteryId)
             ->whereBetween('created_at',[$startDate, $dateCarbon])
             ->pluck('ticket_id');
 
@@ -62,14 +63,14 @@ class RaffleController extends Controller
             $this->registerWinners($ticketIds, TicketPlay::TYPE_QUINIELA, $n1, $prize->first, $lotteryId, $raffle->id);
             $this->registerWinners($ticketIds, TicketPlay::TYPE_QUINIELA, $n2, $prize->second, $lotteryId, $raffle->id);
             $this->registerWinners($ticketIds, TicketPlay::TYPE_QUINIELA, $n3, $prize->third, $lotteryId, $raffle->id);
-            
+
             // winners Palé
             $prize = $lottery->prizes()->where('name', TicketPlay::TYPE_PALE)->first();
             $firstNumbers = [$n1.$n2,$n1.$n3,$n2.$n1,$n3.$n1];
             $secondNumbers = [$n2.$n3,$n3.$n2];
             $this->registerWinners($ticketIds, TicketPlay::TYPE_PALE, $firstNumbers, $prize->first, $lotteryId, $raffle->id);
             $this->registerWinners($ticketIds, TicketPlay::TYPE_PALE, $secondNumbers, $prize->second, $lotteryId, $raffle->id);
-            
+
             // winners Tripleta
             $prize = $lottery->prizes()->where('name', TicketPlay::TYPE_TRIPLETA)->first();
             $numbers = [$n1,$n2,$n3];
