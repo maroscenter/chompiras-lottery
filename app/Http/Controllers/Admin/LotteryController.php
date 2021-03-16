@@ -60,6 +60,7 @@ class LotteryController extends Controller
         }
 
         $prizeNames = $request->prize_names;
+        $prizeTypes = $request->prize_types;
         $prizeFirst = $request->prize_first;
         $prizeSecond = $request->prize_second;
         $prizeThird = $request->prize_third;
@@ -68,6 +69,7 @@ class LotteryController extends Controller
             foreach ($prizeNames as $key => $prizeName) {
                 $prize = new Prize();
                 $prize->name = $prizeName;
+                $prize->type = $prizeTypes[$key];
                 $prize->first = $prizeFirst[$key];
                 if (isset($prizeSecond[$key]))
                     $prize->second = $prizeSecond[$key];

@@ -152,6 +152,7 @@
                                 <td>
                                     Quiniela
                                     <input type="hidden" class="form-control" name="prize_names[]" value="Quiniela">
+                                    <input type="hidden" class="form-control" name="prize_types[]" value="Quiniela">
                                 </td>
                                 <td>
                                     <input type="number" min="0" class="form-control" name="prize_first[]" placeholder="Primera" required>
@@ -167,6 +168,7 @@
                                 <td>
                                     Palé
                                     <input type="hidden" class="form-control" name="prize_names[]" value="Palé">
+                                    <input type="hidden" class="form-control" name="prize_types[]" value="Pale">
                                 </td>
                                 <td>
                                     <input type="number" min="0" class="form-control" name="prize_first[]" placeholder="Primera" required>
@@ -179,6 +181,7 @@
                                 <td>
                                     Tripleta
                                     <input type="hidden" class="form-control" name="prize_names[]" value="Tripleta">
+                                    <input type="hidden" class="form-control" name="prize_types[]" value="Tripleta">
                                 </td>
                                 <td>
                                     <input type="number" min="0" class="form-control" name="prize_first[]" placeholder="Primera" required>
@@ -191,6 +194,7 @@
                                 <td>
                                     Super Palé
                                     <input type="hidden" class="form-control" name="prize_names[]" value="Super Palé">
+                                    <input type="hidden" class="form-control" name="prize_types[]" value="Super_Pale">
                                 </td>
                                 <td>
                                     <input type="number" min="0" class="form-control" name="prize_first[]" placeholder="Primera" required>

@@ -17,6 +17,7 @@ class CreatePrizesTable extends Migration
             $table->increments('id');
 
             $table->string('name');
+            $table->string('type');
             $table->float('first')->nullable();
             $table->float('second')->nullable();
             $table->float('third')->nullable();
