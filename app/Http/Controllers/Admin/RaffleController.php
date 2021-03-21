@@ -46,10 +46,11 @@ class RaffleController extends Controller
         $raffle->save();
 
         $lottery = $raffle->lottery;
-        $dateCarbon = Carbon::parse($raffle->datetime);
+        $dateCarbon = new Carbon($raffle->datetime);
         $nameDay = Carbon::parse($raffle->datetime)->subDay()->format('l');
         $lotteryTime = $lottery->closing_times()->where('day', $nameDay)->first();
-        $startDate = Carbon::parse($lotteryTime->time)->subDay()->addMinutes(15);
+        $date = Carbon::parse($raffle->datetime)->subDay()->format('Y-m-d');
+        $startDate = Carbon::parse($date.' '.$lotteryTime->time)->addMinutes(15);
 
         //get ticket_ids
         $ticketIds = TicketLottery::activeTicket()
