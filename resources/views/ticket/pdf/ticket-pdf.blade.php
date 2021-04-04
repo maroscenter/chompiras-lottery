@@ -54,6 +54,9 @@
     <p>
         <b>Ticket:</b>
         {{ $ticket->id }}
+        @if($ticket->winner_numbers)
+            - Números ganadores: {{ $ticket->winner_numbers }}
+        @endif
     </p>
     <p>
         <b>Fecha Compra:</b>

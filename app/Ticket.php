@@ -13,7 +13,7 @@ class Ticket extends Model
     protected $casts = [
         'created_at' => 'datetime:Y-m-d H:i:s',
     ];
-    
+
     protected $appends = [
         'lotteries_list'
     ];
@@ -40,15 +40,34 @@ class Ticket extends Model
         return $this
             ->belongsToMany(Lottery::class, 'ticket_lottery', 'ticket_id', 'lottery_id');
     }
-    
+
+    public function getWinnerNumbersAttribute()
+    {
+        $ticketPlayIds = $this->plays()
+            ->pluck('id')
+            ->toArray();
+
+        $winnerIds =  Winner::whereIn('ticket_play_id', $ticketPlayIds)
+            ->distinct('ticket_play_id')
+            ->pluck('ticket_play_id')
+            ->toArray();
+
+        $ticketPlayWinnerIds = $this->plays()
+            ->whereIn('id', $winnerIds)
+            ->pluck('number')
+            ->toArray();
+
+        return implode(', ', $ticketPlayWinnerIds);
+    }
+
     public function getLotteriesListAttribute()
     {
         $list = "";
-        
+
         foreach ($this->lotteries as $lottery) {
             $list .=  ($lottery->abbreviated .  ' ');
-        }        
-        
+        }
+
         return $list;
     }
 
