@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\MovementHistory;
 use App\Winner;
 use Illuminate\Http\Request;
 
@@ -33,6 +34,13 @@ class WinnerController extends Controller
 
         $winner->update([
             'paid' => true
+        ]);
+
+        //movement
+        MovementHistory::create([
+            'description' => "Premio #$id pagado",
+            'amount' => $winner->reward,
+            'user_id' => $user->id
         ]);
 
         //balance sheets

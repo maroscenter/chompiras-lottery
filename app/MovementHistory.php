@@ -11,6 +11,6 @@ class MovementHistory extends Model
     ];
 
     protected $fillable = [
-        'amount', 'type', 'user_id'
+        'amount', 'description', 'user_id'
     ];
 }

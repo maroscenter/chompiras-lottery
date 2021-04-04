@@ -23,18 +23,17 @@
                 <h2>$ {{ number_format($user->balance, 2, '.', '') }}</h2>
             </div>
         </div>
-
-        <form action="" method="POST">
-            @csrf
-            <div class="card mb-3">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-sm-7">
-                            <h5><i class="fa fa-dollar"></i> Pagar al {{ $user->balance > 0 ? 'vendedor' : 'administrador' }}</h5>
+        @if($user->balance != 0)
+            <form action="" method="POST">
+                @csrf
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <h5><i class="fa fa-dollar"></i> Pagar al {{ $user->balance > 0 ? 'vendedor' : 'administrador' }}</h5>
+                            </div>
                         </div>
                     </div>
-                </div>
-                @if($user->balance != 0)
                     <div class="card-body">
                         <div id="alert"></div>
                         <div class="row">
@@ -55,10 +54,9 @@
                             Guardar
                         </button>
                     </div>
-                @endif
-            </div>
-        </form>
-
+                </div>
+            </form>
+        @endif
         <div class="card">
             <div class="card-header">
                 Lista de movimientos
@@ -76,7 +74,7 @@
                         <tbody>
                         @foreach($user->movement_histories as $movementHistory)
                             <tr>
-                                <td>Pago realizado al {{ $movementHistory->type == 1 ? 'administrador' : 'vendedor' }}</td>
+                                <td>{{ $movementHistory->description }}</td>
                                 <td>{{ $movementHistory->amount }}</td>
                                 <td>{{ $movementHistory->created_at }}</td>
                             </tr>

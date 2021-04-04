@@ -63,7 +63,7 @@ class User extends Authenticatable
 
     public function movement_histories()
     {
-        return $this->hasMany(MovementHistory::class);
+        return $this->hasMany(MovementHistory::class)->orderByDesc('created_at');
     }
 
     public function is_role($role)

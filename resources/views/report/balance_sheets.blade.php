@@ -7,7 +7,7 @@
                 Balance de cuenta
             </div>
             <div class="card-body">
-                <h2>$ {{ number_format(auth()->user()->balance, 2, '.', '') }}</h2>
+                <h2>$ {{ number_format($user->balance, 2, '.', '') }}</h2>
             </div>
         </div>
 
@@ -22,9 +22,9 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach(auth()->user()->movement_histories as $movementHistory)
+                    @foreach($user->movement_histories as $movementHistory)
                         <tr>
-                            <td>Pago realizado al {{ $movementHistory->type == 1 ? 'administrador' : 'vendedor' }}</td>
+                            <td>{{ $movementHistory->description }}</td>
                             <td>{{ $movementHistory->amount }}</td>
                             <td>{{ $movementHistory->created_at }}</td>
                         </tr>

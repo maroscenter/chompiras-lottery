@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Earning;
 use App\Lottery;
+use App\MovementHistory;
 use App\SalesLimit;
 use App\Ticket;
 use App\TicketLottery;
@@ -11,6 +12,7 @@ use App\TicketPlay;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class TicketController extends Controller
 {
@@ -231,28 +233,24 @@ class TicketController extends Controller
         $ticket->user_id = $user->id;
         $ticket->save();
 
-        if ($lotteryIds) {
-            foreach ($lotteryIds as $lotteryId) {
-                $ticketLottery = new TicketLottery();
-                $ticketLottery->ticket_id = $ticket->id;
-                $ticketLottery->lottery_id = $lotteryId;
-                $ticketLottery->save();
-            }
+        foreach ($lotteryIds as $lotteryId) {
+            $ticketLottery = new TicketLottery();
+            $ticketLottery->ticket_id = $ticket->id;
+            $ticketLottery->lottery_id = $lotteryId;
+            $ticketLottery->save();
         }
 
-        if ($plays) {
-            foreach ($plays as $play) {
-                $type = $play['type'];
-                $number = $play['number'];
-                $point = $play['points'];
+        foreach ($plays as $play) {
+            $type = $play['type'];
+            $number = $play['number'];
+            $point = $play['points'];
 
-                $play = new TicketPlay();
-                $play->number = $number;
-                $play->points = $point;
-                $play->type = $type;
-                $play->ticket_id = $ticket->id;
-                $play->save();
-            }
+            $play = new TicketPlay();
+            $play->number = $number;
+            $play->points = $point;
+            $play->type = $type;
+            $play->ticket_id = $ticket->id;
+            $play->save();
         }
 
         $points = $ticket->plays()->select('points')->sum('points');
@@ -262,23 +260,27 @@ class TicketController extends Controller
         $ticket->commission_earned = $points*$countLotteries*0.15;
         $ticket->save();
 
+        $amount = $points*$countLotteries*0.85;
+        //movement
+        MovementHistory::create([
+            'description' => 'Ticket N° '.$ticket->id.' registrado',
+            'amount' => -$amount,
+            'user_id' => $user->id
+        ]);
         //balance sheets
-        $user->balance -= ($points*$countLotteries*0.85);
+        $user->balance -= $amount;
         $user->save();
 
         //earnings
-        $earning = $user->earning;
-
-        if (!$earning) {
-            $earning = new Earning();
-            $earning->user_id = $user->id;
-        }
-
-        $earning->quantity_tickets += 1;
-        $earning->quantity_points += $ticket->total_points;
-        $earning->income += $ticket->total_points;
-        $earning->commission_earned += $ticket->commission_earned;
-        $earning->save();
+        Earning::updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'quantity_tickets' => DB::raw("quantity_tickets + 1"),
+                'quantity_points' => DB::raw("quantity_points + ". $ticket->total_points),
+                'income' => DB::raw("income + ". $ticket->total_points),
+                'commission_earned' => DB::raw("commission_earned + ". $ticket->commission_earned),
+            ]
+        );
 
         $data['success'] = true;
         return $data;
@@ -303,20 +305,25 @@ class TicketController extends Controller
         $user = $request->user();
 
         // earnings
-        $earning = $user->earning;
+        Earning::updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'quantity_tickets' => DB::raw("quantity_tickets - 1"),
+                'quantity_points' => DB::raw("quantity_points - ". $ticket->total_points),
+                'income' => DB::raw("income - ". $ticket->total_points),
+                'commission_earned' => DB::raw("commission_earned - ". $ticket->commission_earned),
+            ]
+        );
 
-        if (!$earning) {
-            $earning = new Earning();
-            $earning->user_id = $user->id;
-        }
-        $earning->quantity_tickets -= 1;
-        $earning->quantity_points -= $ticket->total_points;
-        $earning->income -= $ticket->total_points;
-        $earning->commission_earned -= $ticket->commission_earned;
-        $earning->save();
-
+        $amount = $ticket->total_points - $ticket->commission_earned;
+        //movement
+        MovementHistory::create([
+            'description' => 'Ticket N° '.$ticket->id.' anulado',
+            'amount' => $amount,
+            'user_id' => $user->id
+        ]);
         //balance sheets
-        $user->balance += ($ticket->total_points - $ticket->commission_earned);
+        $user->balance += $amount;
         $user->save();
 
         $ticket->delete();

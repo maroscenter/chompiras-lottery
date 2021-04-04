@@ -16,8 +16,8 @@ class CreateMovementHistoriesTable extends Migration
         Schema::create('movement_histories', function (Blueprint $table) {
             $table->id();
 
+            $table->string('description');
             $table->float('amount');
-            $table->smallInteger('type');
 
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');

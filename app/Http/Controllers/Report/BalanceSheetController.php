@@ -9,6 +9,8 @@ class BalanceSheetController extends Controller
 {
     public function index()
     {
-        return view('report.balance_sheets');
+        $user = auth()->user();
+
+        return view('report.balance_sheets', compact('user'));
     }
 }

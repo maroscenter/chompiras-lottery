@@ -9,6 +9,14 @@ use Illuminate\Http\Request;
 
 class BalanceController extends Controller
 {
+    public function index(Request $request)
+    {
+        $user = $request->user();
+
+        return $user->movement_histories()
+            ->get(['description', 'amount', 'created_at']);
+    }
+
     public function update($id, Request $request)
     {
         // Get params
@@ -31,8 +39,8 @@ class BalanceController extends Controller
         }
 
         MovementHistory::create([
-            'amount' => $amount,
-            'type' => $type,
+            'amount' => $type == 2 ? -$amount : $amount,
+            'description' => $type == 2 ? 'Pago realizado al vendedor' : 'Pago realizado al administrador',
             'user_id' => $id
         ]);
 
