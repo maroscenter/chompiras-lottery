@@ -5,12 +5,6 @@
         <div class="card">
             <div class="card-header">Listado de vendedores</div>
             <div class="card-body">
-                <div class="form-group">
-                    <a href="{{ url('users/create') }}" class="btn btn-sm btn-success pull-right">
-                        <i class="fa fa-plus"></i>
-                        Registrar nuevo vendedor
-                    </a>
-                </div>
                 <p>Listado de usuarios de la plataforma.</p>
                 <div class="table-responsive">
                     <table class="table table-bordered">
