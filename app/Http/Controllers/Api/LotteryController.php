@@ -8,13 +8,14 @@ use Illuminate\Http\Request;
 
 class LotteryController extends Controller
 {
-    public function index() 
+    public function index()
     {
-        return Lottery::all([
-            'id',
-            'name',
-            'abbreviated',
-            'code'
-        ]);
+        return Lottery::where('status', true)
+            ->all([
+                'id',
+                'name',
+                'abbreviated',
+                'code'
+            ]);
     }
 }

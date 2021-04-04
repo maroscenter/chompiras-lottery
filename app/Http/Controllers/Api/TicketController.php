@@ -194,13 +194,16 @@ class TicketController extends Controller
         foreach ($lotteryIds as $lotteryId) {
             $lottery = Lottery::find($lotteryId);
 
-            if(!$lottery) {
+            if (!$lottery) {
                 $data['success'] = false;
                 $data['error_message'] = "No existe ninguna lotería con id $lotteryId.";
                 return $data;
             }
 
-            $existsInactive = $lottery->inactive_dates()->where('date', $now)->exists();
+            $existsInactive = $lottery->inactive_dates()
+                ->where('date', $now->format('Y-m-d'))
+                ->exists();
+
             if ($existsInactive) {
                 $data['success'] = false;
                 $data['error_message'] = "La lotería $lottery->name ya no admite más jugadas en esta fecha. Vuelva a intentarlo el día de mañana.";
