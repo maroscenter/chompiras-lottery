@@ -115,6 +115,102 @@
                     </div>
                 </div>
             </div>
+            <div class="card">
+                <div class="card-header">
+                    <h5>Límite de venta por <b>tipo de jugada y número</b></h5>
+                </div>
+                <div class="card-body">
+                    <h5>Límite global</h5>
+                    <button type="button" data-add="global" class="btn btn-sm btn-success mb-3"><i class="fa fa-plus"></i> Agregar</button>
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                            <tr>
+                                <th>Número</th>
+                                <th>Puntos</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody id="globalContent">
+                            @foreach($globalPlayLimits as $globalPlayLimit)
+                                <tr>
+                                    <td>
+                                        <input type="hidden" name="global_play_limit_ids[]" value="{{ $globalPlayLimit->id }}">
+                                        <input type="number" min="10" class="form-control" name="global_numbers[]" value="{{ $globalPlayLimit->number }}" required>
+                                    </td>
+                                    <td>
+                                        <input type="number" min="10" class="form-control" name="global_points[]" value="{{ $globalPlayLimit->points }}" required>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger" data-remove><i class="fa fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h5>Límite por vendedor</h5>
+                    <button type="button" data-add="seller" class="btn btn-sm btn-success mb-3"><i class="fa fa-plus"></i> Agregar</button>
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                            <tr>
+                                <th>Número</th>
+                                <th>Puntos</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody id="sellerContent">
+                            @foreach($sellerPlayLimits as $sellerPlayLimit)
+                                <tr>
+                                    <td>
+                                        <input type="hidden" name="seller_play_limit_ids[]" value="{{ $sellerPlayLimit->id }}">
+                                        <input type="number" min="10" class="form-control" name="seller_numbers[]" value="{{ $sellerPlayLimit->number }}" required>
+                                    </td>
+                                    <td>
+                                        <input type="number" min="1" class="form-control" name="seller_points[]" value="{{ $sellerPlayLimit->points }}" required>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger" data-remove><i class="fa fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h5>Límite por ticket</h5>
+                    <button type="button" data-add="ticket" class="btn btn-sm btn-success mb-3"><i class="fa fa-plus"></i> Agregar</button>
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                            <tr>
+                                <th>Número</th>
+                                <th>Puntos</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody id="ticketContent">
+                            @foreach($ticketPlayLimits as $ticketPlayLimit)
+                                <tr>
+                                    <td>
+                                        <input type="hidden" name="ticket_play_limit_ids[]" value="{{ $ticketPlayLimit->id }}">
+                                        <input type="number" min="10" class="form-control" name="ticket_numbers[]" value="{{ $ticketPlayLimit->number }}" required>
+                                    </td>
+                                    <td>
+                                        <input type="number" min="1" class="form-control" name="ticket_points[]" value="{{ $ticketPlayLimit->points }}" required>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger" data-remove><i class="fa fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
 @endsection
@@ -238,6 +334,31 @@
             let $tr = $(this).closest('tr');
             $tr.remove();
             $("#sellerId").select2("val", "");
+        });
+    </script>
+
+    <script>
+        $(document).on('click', '[data-add]', function () {
+            let $type = $(this).data('add');
+
+            let $content = $('#'+$type+'Content');
+
+            let html = '<tr>\n' +
+                '<td>\n' +
+                '<input type="hidden" name="'+$type+'_play_limit_ids[]" value="0">' +
+                '<input type="number" min="10" class="form-control" name="'+$type+'_numbers[]" value="" required>' +
+                '</td>\n' +
+                '<td>\n' +
+                '<input type="number" min="1" class="form-control" name="'+$type+'_points[]" value="" required>\n' +
+                '<td><button type="button" class="btn btn-danger" data-remove><i class="fa fa-trash"></i></button></td>' +
+                '</tr>';
+
+            $content.append(html);
+        });
+
+        $(document).on('click', '[data-remove]', function () {
+            let $tr = $(this).closest('tr');
+            $tr.remove();
         });
     </script>
 @endsection

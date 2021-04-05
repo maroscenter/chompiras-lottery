@@ -6,6 +6,7 @@ use App\Earning;
 use App\Lottery;
 use App\MovementHistory;
 use App\SalesLimit;
+use App\SalesPlayLimit;
 use App\Ticket;
 use App\TicketLottery;
 use App\TicketPlay;
@@ -123,6 +124,8 @@ class TicketController extends Controller
 
         $startOfWeek = Carbon::now()->startOfWeek(Carbon::MONDAY);
         $endOfWeek = Carbon::now()->endOfWeek(Carbon::SUNDAY);
+        $startOfDay = Carbon::now()->startOfDay();
+        $endOfDay = Carbon::now()->endOfDay();
 
         $limit = SalesLimit::where('user_id', $user->id)->first();
         $global = SalesLimit::find(1);
@@ -134,6 +137,63 @@ class TicketController extends Controller
         foreach ($plays as $play) {
             $type = $play['type'];
             $point = $play['points'];
+            $number = $play['number'];
+
+            //limit play
+            //ticket
+            $ticketLimit = SalesPlayLimit::where('type', SalesPlayLimit::TICKET)
+                ->where('number', $number)
+                ->first(['points']);
+
+            if ($ticketLimit && $ticketLimit->points < $point*$countLotteryIds) {
+                $data['success'] = false;
+                $data['error_message'] = "Lo sentimos, pero excedió el límite de ventas por ticket para el el N° $number ($ticketLimit->points puntos disponibles).";
+                return $data;
+            }
+            //seller
+            $sellerLimit = SalesPlayLimit::where('type', SalesPlayLimit::SELLER)
+                ->where('number', $number)
+                ->first(['points']);
+
+            if ($sellerLimit) {
+                $sellerTicketIds = $user->tickets()
+                    ->whereBetween('created_at', [$startOfDay, $endOfDay])
+                    ->pluck('id');
+
+                $sellerSumPoints = TicketPlay::whereIn('ticket_id', $sellerTicketIds)
+                    ->where('number', $number)
+                    ->select('points')
+                    ->sum('points');
+
+                if ($sellerLimit->points < ($sellerSumPoints + $point*$countLotteryIds)) {
+                    $data['success'] = false;
+                    $available = $sellerLimit->points - $sellerSumPoints;
+                    $data['error_message'] = "Lo sentimos, pero excedió su límite de ventas diarías para el N° $number ($available puntos disponibles).";
+                    return $data;
+                }
+            }
+
+            //global
+            $globalLimit = SalesPlayLimit::where('type', SalesPlayLimit::GLOBAL)
+                ->where('number', $number)
+                ->first(['points']);
+
+            if ($globalLimit) {
+                $globalTicketIds = Ticket::whereBetween('created_at', [$startOfDay, $endOfDay])
+                    ->pluck('id');
+
+                $globalSumPoints = TicketPlay::whereIn('ticket_id', $globalTicketIds)
+                    ->where('number', $number)
+                    ->select('points')
+                    ->sum('points');
+
+                if ($globalLimit->points < ($globalSumPoints + $point*$countLotteryIds)) {
+                    $data['success'] = false;
+                    $available = $globalLimit->points - $globalSumPoints;
+                    $data['error_message'] = "Lo sentimos, pero excedió el límite global de ventas diarías para el N° $number ($available puntos disponibles).";
+                    return $data;
+                }
+            }
 
             // limit - individual
             $ticketIds = $user->tickets()->whereBetween('created_at', [$startOfWeek, $endOfWeek])->pluck('id');
