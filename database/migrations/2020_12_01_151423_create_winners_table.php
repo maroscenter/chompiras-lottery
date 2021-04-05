@@ -18,6 +18,8 @@ class CreateWinnersTable extends Migration
 
             $table->float('reward');
 
+            $table->boolean('paid')->default(false);
+
             $table->unsignedInteger('ticket_play_id');
             $table->foreign('ticket_play_id')->references('id')->on('ticket_plays');
 
