@@ -11,7 +11,7 @@ class LotteryController extends Controller
     public function index()
     {
         return Lottery::where('status', true)
-            ->all([
+            ->get([
                 'id',
                 'name',
                 'abbreviated',
