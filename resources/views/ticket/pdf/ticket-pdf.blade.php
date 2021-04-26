@@ -6,7 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <style type="text/css">
         @page {
-            size: 8.5cm 11cm;
+            size: 8.5cm @json($height)cm;
             margin: 0 !important;
         }
         body {
@@ -46,7 +46,7 @@
 <div style="width: 100%; margin: 0 auto; padding: 10px">
     <h3>{{ $ticket->user->name }}</h3>
     <p>
-        <b>Lotería{{ $ticket->lotteries->count() > 1 ? 's' : '' }}:</b>
+        <b>Lotería{{ $ticket->lotteries()->count() > 1 ? 's' : '' }}:</b>
         @foreach($ticket->lotteries as $lottery)
             {{ $lottery->name }}{{ !$loop->last ? ', ' : '' }}
         @endforeach

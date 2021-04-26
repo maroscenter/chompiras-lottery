@@ -48,8 +48,11 @@ class TicketController extends Controller
     public function pdf($id)
     {
         $ticket = Ticket::findOrFail($id);
+        $count = $ticket->plays()->count();
 
-        $pdf = PDF::loadView('ticket.pdf.ticket-pdf', ['ticket' =>$ticket]);
+        $height = $count <= 5 ? 11 : 11 + ($count-5);
+
+        $pdf = PDF::loadView('ticket.pdf.ticket-pdf', ['ticket' =>$ticket, 'height' => $height]);
 
         return $pdf->stream($ticket->id.'.pdf');
     }
