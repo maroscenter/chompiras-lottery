@@ -14,7 +14,9 @@ class BalanceController extends Controller
         $user = $request->user();
 
         return $user->movement_histories()
-            ->get(['description', 'amount', 'created_at']);
+            ->get([
+                'description', 'amount', 'created_at'
+            ]);
     }
 
     public function update($id, Request $request)

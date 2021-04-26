@@ -46,9 +46,10 @@ Route::group([
     // Lotteries
     Route::get('lotteries', 'Api\LotteryController@index');
 
-    //show detail balance
-    Route::get('movement_histories', 'Api\BalanceController@index');
-    //register balance
+    // Show movements that affected balance
+    Route::get('balance_movements', 'Api\BalanceController@index');
+    
+    // Register balance
     Route::post('balance/{userId}', 'Api\BalanceController@update');
 });
 

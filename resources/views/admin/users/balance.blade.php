@@ -57,6 +57,7 @@
                 </div>
             </form>
         @endif
+        
         <div class="card">
             <div class="card-header">
                 Lista de movimientos
@@ -86,6 +87,7 @@
         </div>
     </div>
 @endsection
+
 @section('scripts')
     <script>
         $(document).on('click', '[data-amount]', function () {

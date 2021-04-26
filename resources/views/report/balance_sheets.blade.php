@@ -22,7 +22,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($user->movement_histories as $movementHistory)
+                    @foreach ($user->movement_histories as $movementHistory)
                         <tr>
                             <td>{{ $movementHistory->description }}</td>
                             <td>{{ $movementHistory->amount }}</td>
