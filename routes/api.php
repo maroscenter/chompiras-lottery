@@ -52,4 +52,3 @@ Route::group([
     // Register balance
     Route::post('balance/{userId}', 'Api\BalanceController@update');
 });
-

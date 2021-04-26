@@ -31,7 +31,8 @@ class UserController extends Controller
         
         $data['total'] = [
             'income' => $query->sum('total_points'),
-            'commission' => $query->sum('commission_earned')
+            'commission' => $query->sum('commission_earned'),
+            'balance' => $user->balance
         ];
 
         return response()->json($data);
