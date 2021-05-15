@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ $ticket->id }}.pdf</title>
+    <title>{{ $ticket->code }}.pdf</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <style type="text/css">
@@ -53,7 +53,7 @@
     </p>
     <p>
         <b>Ticket:</b>
-        {{ $ticket->id }}
+        {{ $ticket->code }}
         @if($ticket->winner_numbers)
             - Números ganadores: {{ $ticket->winner_numbers }}
         @endif

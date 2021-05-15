@@ -13,7 +13,7 @@
         <tbody>
         @foreach ($tickets as $ticket)
             <tr>
-                <td>{{ $ticket->id }}</td>
+                <td>{{ $ticket->code }}</td>
                 <td>{{ $ticket->user->name }}</td>
                 <td>
                     @foreach($ticket->lotteries as $lottery)

@@ -7,7 +7,7 @@
 
                 <div class="card">
                     <div class="card-header">
-                        Jugadas vendidas en el ticket # {{ $ticket->id }}
+                        Jugadas vendidas en el ticket # {{ $ticket->code }}
                         <div class="float-right">
                             <a href="/ticket/{{ $ticket->id }}/pdf" target="_blank" class="btn btn-danger btn-sm">
                                 <span class="glyphicon glyphicon-export"></span>
@@ -37,7 +37,7 @@
                         </p>
                         <p>
                             <b>Ticket:</b>
-                            {{ $ticket->id }}
+                            {{ $ticket->code }}
                             @if($ticket->winner_numbers)
                                 - Números ganadores: {{ $ticket->winner_numbers }}
                             @endif

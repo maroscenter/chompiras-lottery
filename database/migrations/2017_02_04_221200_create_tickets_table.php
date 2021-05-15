@@ -16,6 +16,8 @@ class CreateTicketsTable extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->increments('id');
 
+            $table->string('code')->nullable();
+
             $table->unsignedInteger('total_points')->default(0);
             $table->float('commission_earned')->default(0);
 

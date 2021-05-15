@@ -35,6 +35,9 @@
                         <li class="nav-item {{ request()->is('raffles*') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ url('raffles') }}">Sorteos</a>
                         </li>
+                        <li class="nav-item {{ request()->is('users*') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ url('users') }}">Usuarios</a>
+                        </li>
                     @endif
                     <li class="nav-item {{ request()->is('*balance_sheets') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ url('balance_sheets') }}">Balance de cuenta</a>

@@ -40,7 +40,7 @@ class TicketController extends Controller
         $tickets = $query
             ->with('lotteries')
             ->orderBy('created_at', 'desc')->get([
-                'id', 'total_points', 'commission_earned', 'user_id', 'created_at'
+                'id', 'code', 'total_points', 'commission_earned', 'user_id', 'created_at'
             ]);
 
         $data['tickets'] = $tickets;
@@ -289,7 +289,14 @@ class TicketController extends Controller
         }
 
         // Validation passed
+        $countTickets = $user->tickets()
+            ->withTrashed()
+            ->count();
+
+        $code = $user->id.'_'.($countTickets+1);
+
         $ticket = new Ticket();
+        $ticket->code = $code;
         $ticket->user_id = $user->id;
         $ticket->save();
 
@@ -323,7 +330,7 @@ class TicketController extends Controller
         $amount = $points*$countLotteries*0.85;
         //movement
         MovementHistory::create([
-            'description' => 'Ticket N° '.$ticket->id.' registrado',
+            'description' => 'Ticket N° '.$ticket->code.' registrado',
             'amount' => -$amount,
             'user_id' => $user->id
         ]);
@@ -378,7 +385,7 @@ class TicketController extends Controller
         $amount = $ticket->total_points - $ticket->commission_earned;
         //movement
         MovementHistory::create([
-            'description' => 'Ticket N° '.$ticket->id.' anulado',
+            'description' => 'Ticket N° '.$ticket->code.' anulado',
             'amount' => $amount,
             'user_id' => $user->id
         ]);

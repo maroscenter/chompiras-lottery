@@ -136,10 +136,10 @@
                                 <tr>
                                     <td>
                                         <input type="hidden" name="global_play_limit_ids[]" value="{{ $globalPlayLimit->id }}">
-                                        <input type="number" min="10" class="form-control" name="global_numbers[]" value="{{ $globalPlayLimit->number }}" required>
+                                        <input type="number" min="1" class="form-control" name="global_numbers[]" value="{{ $globalPlayLimit->number }}" required>
                                     </td>
                                     <td>
-                                        <input type="number" min="10" class="form-control" name="global_points[]" value="{{ $globalPlayLimit->points }}" required>
+                                        <input type="number" min="1" class="form-control" name="global_points[]" value="{{ $globalPlayLimit->points }}" required>
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-danger" data-remove><i class="fa fa-trash"></i></button>
@@ -166,7 +166,7 @@
                                 <tr>
                                     <td>
                                         <input type="hidden" name="seller_play_limit_ids[]" value="{{ $sellerPlayLimit->id }}">
-                                        <input type="number" min="10" class="form-control" name="seller_numbers[]" value="{{ $sellerPlayLimit->number }}" required>
+                                        <input type="number" min="1" class="form-control" name="seller_numbers[]" value="{{ $sellerPlayLimit->number }}" required>
                                     </td>
                                     <td>
                                         <input type="number" min="1" class="form-control" name="seller_points[]" value="{{ $sellerPlayLimit->points }}" required>
@@ -196,7 +196,7 @@
                                 <tr>
                                     <td>
                                         <input type="hidden" name="ticket_play_limit_ids[]" value="{{ $ticketPlayLimit->id }}">
-                                        <input type="number" min="10" class="form-control" name="ticket_numbers[]" value="{{ $ticketPlayLimit->number }}" required>
+                                        <input type="number" min="1" class="form-control" name="ticket_numbers[]" value="{{ $ticketPlayLimit->number }}" required>
                                     </td>
                                     <td>
                                         <input type="number" min="1" class="form-control" name="ticket_points[]" value="{{ $ticketPlayLimit->points }}" required>
@@ -346,7 +346,7 @@
             let html = '<tr>\n' +
                 '<td>\n' +
                 '<input type="hidden" name="'+$type+'_play_limit_ids[]" value="0">' +
-                '<input type="number" min="10" class="form-control" name="'+$type+'_numbers[]" value="" required>' +
+                '<input type="number" min="1" class="form-control" name="'+$type+'_numbers[]" value="" required>' +
                 '</td>\n' +
                 '<td>\n' +
                 '<input type="number" min="1" class="form-control" name="'+$type+'_points[]" value="" required>\n' +

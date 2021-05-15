@@ -54,6 +54,6 @@ class TicketController extends Controller
 
         $pdf = PDF::loadView('ticket.pdf.ticket-pdf', ['ticket' =>$ticket, 'height' => $height]);
 
-        return $pdf->stream($ticket->id.'.pdf');
+        return $pdf->stream($ticket->code.'.pdf');
     }
 }
