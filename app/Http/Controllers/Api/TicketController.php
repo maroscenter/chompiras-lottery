@@ -369,7 +369,7 @@ class TicketController extends Controller
             return $data;
         }
 
-        $user = $request->user();
+        $user = $ticket->user;
 
         // earnings
         Earning::updateOrCreate(
