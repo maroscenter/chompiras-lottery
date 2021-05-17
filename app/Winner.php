@@ -19,6 +19,10 @@ class Winner extends Model
         'ticket_play', 'lottery', 'raffle'
     ];
 
+    protected $appends = [
+        'ticket_code'
+    ];
+
     public function ticket_play()
     {
         return $this->belongsTo(TicketPlay::class);
@@ -37,5 +41,10 @@ class Winner extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getTicketCodeAttribute()
+    {
+        return $this->ticket_play->ticket->code;
     }
 }
